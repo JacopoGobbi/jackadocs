@@ -2,11 +2,11 @@ package net.jackadull.jackadocs.docs.readme
 
 import net.jackadull.jackadocs.structure.Chapter
 
-import scala.xml.{NodeSeq, Text}
+import scala.xml.NodeSeq
 
 object IntentedUse extends Chapter {
-  def id:String = "intended_use"
-  def title:NodeSeq = Text("Intended Use")
+  def id = "intended_use"
+  def title = "Intended Use / Basic Idea"
 
   def contents:NodeSeq =
 <p>
@@ -20,6 +20,9 @@ object IntentedUse extends Chapter {
   When writing documentation in Markdown format, the HTML will be converted to Markdown.
   (However, the conversion process is not very smart; don't expect miracles from it.
   It will do just enough to translate simple documentation, such as <tt>README.md</tt> files.)
+</p>
+<p>
+  <a href="https://github.com/jackadull/jackadocs/blob/master/docs-generator/src/main/scala/net/jackadull/jackadocs/docs/readme/IntentedUse.scala">Here</a> is an example for the Scala source file from which this text is generated.
 </p>
 <p>
   In order to isolate documentation-generating code from the actual module that is to be published, it is advisable to keep the documentation generating code in a separate module.

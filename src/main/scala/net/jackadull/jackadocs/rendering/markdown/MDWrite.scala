@@ -7,7 +7,7 @@ object MDWrite {
   def apply(blocks:Traversable[MDBlock], out:Appendable) {
     def renderBlock(block:MDBlock, writer:LineWriter):LineWriter = block match {
       case MDATXHeading(level, contents) ⇒
-        renderInlines(contents, writer pushLinePrefix ("#"*level+" ", " "*(level+1))) popLinePrefix() nextLine()
+        renderInlines(contents, writer pushLinePrefix ("#"*level+" ", " "*(level+1)) withoutLeadingWhitespace()) popLinePrefix() nextLine()
       case MDBlockQuote(contents) ⇒
         renderBlocks(contents, writer pushLinePrefix "> ") popLinePrefix()
       case MDCodeFence(infoString, lines) ⇒
@@ -22,7 +22,7 @@ object MDWrite {
         }
       case MDParagraph(contents) ⇒
         contents.zipWithIndex.foldLeft(writer) {case (w, (t, index)) ⇒
-          if(index==0) renderInline(t, w) else renderInline(t, w append ' ')
+          if(index==0) renderInline(t, w withoutLeadingWhitespace()) else renderInline(t, w append ' ' withoutLeadingWhitespace())
         } nextLine() nextLine()
       case MDThematicBreak ⇒ writer nextLine() append "---" nextLine() nextLine()
     }
@@ -69,6 +69,7 @@ object MDWrite {
     def popLinePrefix():LineWriter
     def pushLinePrefix(prefix:String):LineWriter = WithLinePrefix(prefix, this)
     def pushLinePrefix(nextLine:String, linesThereafter:String):LineWriter = WithLinePrefix2(nextLine, linesThereafter, this)
+    def withoutLeadingWhitespace():LineWriter = WithoutLeadingWhitespace(this)
   }
   private final case class LineWriterToAppendable(out:Appendable) extends LineWriter {
     def append(str:String) = {out append str; this}
@@ -103,7 +104,29 @@ object MDWrite {
       WithLinePrefix(linesThereafter, inner append nextLinePrefix nextLine())
     def popLinePrefix() = inner
   }
+  private final case class WithoutLeadingWhitespace(inner:LineWriter) extends LineWriter {
+    def append(str:String):LineWriter = if(str isEmpty) this else removeLeadingWhitespace(str) match {
+      case Some(noWs) if noWs isEmpty ⇒ this
+      case Some(noWs) ⇒ inner append noWs
+      case None ⇒ inner append str
+    }
+    def append(ch:Char):LineWriter = if(isWhitespace(ch)) this else inner append ch
+    def nextLine():LineWriter = inner.nextLine()
+    def popLinePrefix():LineWriter = inner.popLinePrefix()
+    override def pushLinePrefix(prefix:String):LineWriter = WithoutLeadingWhitespace(inner pushLinePrefix prefix)
+    override def pushLinePrefix(nextLine:String, linesThereafter:String):LineWriter = WithoutLeadingWhitespace(inner pushLinePrefix (nextLine, linesThereafter))
+    override def withoutLeadingWhitespace():LineWriter = this
+  }
 
   private val asciiOperators:Set[Char] = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~" toSet
   private def isAsciiOperator(ch:Char):Boolean = asciiOperators(ch)
+  private def isWhitespace(ch:Char):Boolean = ch match {
+    case ' ' | '\t' | '\n' | '\r' | '\u000B' | '\u000C' ⇒ true
+    case _ ⇒ false
+  }
+  private def removeLeadingWhitespace(str:String):Option[String] =
+    if(str isEmpty) None else if(isWhitespace(str(0))) removeLeadingWhitespace(str tail) match {
+      case Some(noWs) ⇒ Some(noWs)
+      case None ⇒ Some(str tail)
+    } else None
 }

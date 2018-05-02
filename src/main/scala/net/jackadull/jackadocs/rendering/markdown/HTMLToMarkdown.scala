@@ -11,9 +11,12 @@ object HTMLToMarkdown {
   private def convertBlocks(ns:NodeSeq):Seq[MDBlock] = {
     def combineStrayInlines(s:Seq[NodeSeq], soFar:Vector[MDInline]=Vector()):Seq[MDBlock] = s match {
       case Seq(strayInline, rst@_*) if convertSingleInline isDefinedAt strayInline ⇒
-        combineStrayInlines(rst, soFar :+ convertSingleInline(strayInline))
-      case Seq() ⇒ Vector(MDParagraph(soFar))
-      case rst ⇒ MDParagraph(soFar) +: recurseOver(rst)
+        convertSingleInline(strayInline) match {
+          case MDInlineText(txt) if txt.trim.isEmpty ⇒ combineStrayInlines(rst, soFar)
+          case singleInline ⇒ combineStrayInlines(rst, soFar :+ singleInline)
+        }
+      case Seq() ⇒ if(soFar isEmpty) Vector() else Vector(MDParagraph(soFar))
+      case rst ⇒ if(soFar isEmpty) recurseOver(rst) else MDParagraph(soFar) +: recurseOver(rst)
     }
     def recurseOver(s:Seq[NodeSeq]):Seq[MDBlock] = s match {
       case Seq(single, rst@_*) if convertSingleBlock isDefinedAt single ⇒ convertSingleBlock(single) +: recurseOver(rst)
@@ -23,6 +26,7 @@ object HTMLToMarkdown {
     }
     ns match {
       case single if convertSingleBlock isDefinedAt single ⇒ Vector(convertSingleBlock(single))
+      case a:Atom[_] if s"${a data}".trim isEmpty ⇒ Vector()
       case strayInline if convertSingleInline isDefinedAt strayInline ⇒ Vector(MDParagraph(Vector(convertSingleInline(strayInline))))
       case doc:Document ⇒ recurseOver(doc children)
       case e:Elem ⇒ recurseOver(e child)
@@ -50,6 +54,7 @@ object HTMLToMarkdown {
 
   private def convertInlines(ns:NodeSeq):Seq[MDInline] = ns match {
     case single if convertSingleInline isDefinedAt single ⇒ Vector(convertSingleInline(single))
+    case a:Atom[_] if s"${a data}".trim isEmpty ⇒ Vector()
     case doc:Document ⇒ doc.children.toVector flatMap convertInlines
     case e:Elem ⇒ e.child.toVector flatMap convertInlines
     case Group(child) ⇒ child.toVector flatMap convertInlines
@@ -58,9 +63,7 @@ object HTMLToMarkdown {
   }
 
   private val convertSingleInline:PartialFunction[NodeSeq,MDInline] = {
-    case p:PCData ⇒ inlineText(p data)
-    case t:Text ⇒ inlineText(t data)
-    case a:Atom[_] ⇒ inlineText(s"${a data}")
+    case a:Atom[_] if s"${a data}".trim nonEmpty ⇒ inlineText(s"${a data}")
     case e:Elem if e.label == "a" && e.attribute("href").nonEmpty ⇒
       MDLink(
         text = convertInlines(e child),

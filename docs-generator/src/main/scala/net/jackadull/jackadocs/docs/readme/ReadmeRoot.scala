@@ -2,11 +2,11 @@ package net.jackadull.jackadocs.docs.readme
 
 import net.jackadull.jackadocs.structure.Chapter
 
-import scala.xml.{NodeSeq, Text}
+import scala.xml.NodeSeq
 
 object ReadmeRoot extends Chapter {
-  def id:String = "readme_begin"
-  def title:NodeSeq = Text("jackadocs")
+  def id = "readme_begin"
+  def title = "jackadocs"
 
   def contents:NodeSeq =
 <p>
@@ -14,5 +14,6 @@ object ReadmeRoot extends Chapter {
   Can be used for creating <tt>README.md</tt> files, but also for documentation books, with multiple files, in either HTML or Github-Flavored Markdown.
 </p>
 
-  override def subChapters:Seq[Chapter] = Seq(Motivation, IntentedUse)
+  override def subChapters:Seq[Chapter] = Seq(Motivation, IntentedUse, UsageExample, ChapterStructure,
+    RenderingProcess, FurtherRemarks, Roadmap)
 }

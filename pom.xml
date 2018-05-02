@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>jackadocs_2.12</artifactId>
@@ -38,16 +38,36 @@
     <url>https://github.com/jackadull/jackadocs</url>
   </scm>
 
+  <properties>
+    <maven.compiler.source>${version.jvm.source}</maven.compiler.source> <!-- TODO move to parent -->
+    <maven.compiler.target>${version.jvm.target}</maven.compiler.target> <!-- TODO move to parent -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> <!-- TODO move to parent -->
+    <version.plugin.templating>1.0.0</version.plugin.templating>
+  </properties>
+
   <dependencies>
-    <dependency>
-      <groupId>net.jackadull</groupId>
-      <artifactId>objectscan_${version.language.scala.compat}</artifactId>
-      <version>0.2.0</version>
-    </dependency>
     <dependency>
       <groupId>org.scala-lang.modules</groupId>
       <artifactId>scala-xml_${version.language.scala.compat}</artifactId>
       <scope>provided</scope>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin> <!-- TODO define in parent pluginManagement -->
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>templating-maven-plugin</artifactId>
+        <version>${version.plugin.templating}</version>
+        <executions>
+          <execution>
+            <id>filter-src</id>
+            <goals>
+              <goal>filter-sources</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>
