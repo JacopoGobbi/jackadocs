@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>jackadocs_2.12</artifactId>
-  <version>0.1.0</version>
+  <version>0.2.0</version>
 
   <name>jackadocs</name>
   <description>Tool library for automatic generation of tool documentation.</description>
@@ -13,7 +13,7 @@
   <parent>
     <groupId>net.jackadull</groupId>
     <artifactId>scala-parent_2.12</artifactId>
-    <version>1.0.0</version>
+    <version>1.3.0</version>
   </parent>
 
   <licenses>
@@ -38,13 +38,6 @@
     <url>https://github.com/jackadull/jackadocs</url>
   </scm>
 
-  <properties>
-    <maven.compiler.source>${version.jvm.source}</maven.compiler.source> <!-- TODO move to parent -->
-    <maven.compiler.target>${version.jvm.target}</maven.compiler.target> <!-- TODO move to parent -->
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> <!-- TODO move to parent -->
-    <version.plugin.templating>1.0.0</version.plugin.templating>
-  </properties>
-
   <dependencies>
     <dependency>
       <groupId>org.scala-lang.modules</groupId>
@@ -55,18 +48,9 @@
 
   <build>
     <plugins>
-      <plugin> <!-- TODO define in parent pluginManagement -->
+      <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>templating-maven-plugin</artifactId>
-        <version>${version.plugin.templating}</version>
-        <executions>
-          <execution>
-            <id>filter-src</id>
-            <goals>
-              <goal>filter-sources</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>
