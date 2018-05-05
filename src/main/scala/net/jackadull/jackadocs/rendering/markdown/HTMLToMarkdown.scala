@@ -32,6 +32,7 @@ object HTMLToMarkdown {
       case e:Elem ⇒ recurseOver(e child)
       case Group(child) ⇒ recurseOver(child)
       case _ if (ns.getClass.getName startsWith "scala.xml.NodeSeq") && (ns.theSeq != ns) ⇒ recurseOver(ns theSeq)
+      case _ if ns isEmpty ⇒ Vector()
       case _ ⇒ sys error s"unhandled NodeSeq type: $ns"
     }
   }
@@ -59,6 +60,7 @@ object HTMLToMarkdown {
     case e:Elem ⇒ e.child.toVector flatMap convertInlines
     case Group(child) ⇒ child.toVector flatMap convertInlines
     case _ if (ns.getClass.getName startsWith "scala.xml.NodeSeq") && (ns.theSeq != ns) ⇒ ns.theSeq.toVector flatMap convertInlines
+    case _ if ns isEmpty ⇒ Vector()
     case _ ⇒ sys error s"unhandled NodeSeq type: $ns"
   }
 
