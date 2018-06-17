@@ -1,4 +1,4 @@
-# jackadocs
+# Jackadocs
 Tool library for automated generation of tool documentation\. Can be used for creating `README.md` files\, but also for documentation books\, with multiple files\, in either HTML or Github\-Flavored Markdown\.
 
 ## Motivation

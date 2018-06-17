@@ -6,7 +6,7 @@ import scala.xml.NodeSeq
 
 object ReadmeRoot extends Chapter {
   def id = "readme_begin"
-  def title = "jackadocs"
+  def title = "Jackadocs"
 
   def contents:NodeSeq =
 <p>

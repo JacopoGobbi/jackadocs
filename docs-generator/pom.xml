@@ -17,7 +17,7 @@
   </parent>
 
   <properties>
-    <version.dependency.jackadocs>0.2.0</version.dependency.jackadocs>
+    <version.dependency.jackadocs>0.2.2</version.dependency.jackadocs>
     <version.plugin.exec-maven-plugin>1.1.1</version.plugin.exec-maven-plugin>
   </properties>
 
