@@ -203,5 +203,5 @@ Here are some features that are considered or planned for future implementation\
 
 * `ChapterNumbering` with support for different kinds of numberings on different levels
 
-* Moving the whole Markdown model into a separate project \(and extending Markdown support there\)
+* Migrate the whole Markdown to [Jackadull GFM](https\:\/\/github\.com\/jackadull\/gfm)
 
