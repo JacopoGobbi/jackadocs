@@ -28,6 +28,9 @@ final case class MDEmphasis(contents:Seq[MDInline]) extends MDInline {
 object MDHardLineBreak extends MDInline {
   def treeStructure(linePrefix:String):String = s"${linePrefix}HardLineBreak\n"
 }
+final case class MDImage(description:Seq[MDInline], url:String, title:Option[String]) extends MDInline {
+  def treeStructure(linePrefix:String):String = s"${linePrefix}Image url='$url' title=$title\n${description.map(_.treeStructure(s"$linePrefix  ")) mkString}"
+}
 final case class MDInlineText(data:String) extends MDInline {
   require(!((data contains '\n') || (data contains '\r')), "inline text cannot contain a line break")
   def treeStructure(linePrefix:String):String = s"${linePrefix}InlineText: '$data'\n"

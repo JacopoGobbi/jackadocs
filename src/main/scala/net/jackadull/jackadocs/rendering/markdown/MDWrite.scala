@@ -34,6 +34,15 @@ object MDWrite {
       case MDCodeSpan(contents) ⇒ writer append '`' append contents append '`' // TODO what if contents contains a backtick?
       case MDEmphasis(contents) ⇒ renderInlines(contents, writer append '_') append '_'
       case MDHardLineBreak ⇒ writer append '\\' nextLine()
+      case MDImage(description, url, title) ⇒
+        def maybeAddTitle(w:LineWriter):LineWriter = title match {
+          case Some(titleString) ⇒ appendEscaped(titleString, writer append " \"") append '\"'
+          case None ⇒ w
+        }
+        val afterDescription = renderInlines(description, writer append "![") append ']'
+        val afterURL = appendEscaped(url replaceAll (" ", "%20"), afterDescription append '(')
+        val afterTitle = maybeAddTitle(afterURL)
+        afterTitle append ')'
       case MDInlineText(data) ⇒ appendEscaped(data, writer)
       case MDLink(text, destination, title) ⇒
         def maybeAddTitle(w:LineWriter):LineWriter = title match {

@@ -1,4 +1,6 @@
 # Jackadocs
+[![Travis](https\:\/\/img\.shields\.io\/travis\/jackadull\/jackadocs\.svg\?style\=plastic)](https\:\/\/travis\-ci\.org\/jackadull\/jackadocs) ![Maven Central](https\:\/\/img\.shields\.io\/maven\-central\/v\/net\.jackadull\/jackadocs\_2\.12\.svg\?style\=plastic) [![Coveralls](https\:\/\/img\.shields\.io\/coveralls\/github\/jackadull\/jackadocs\.svg\?style\=plastic)](https\:\/\/coveralls\.io\/github\/jackadull\/jackadocs) [![Codefactor](https\:\/\/www\.codefactor\.io\/repository\/github\/jackadull\/jackadocs\/badge\?style\=plastic)](https\:\/\/www\.codefactor\.io\/repository\/github\/jackadull\/jackadocs) [![Snyk](https\:\/\/snyk\.io\/test\/github\/jackadull\/jackadocs\/badge\.svg\?style\=plastic)](https\:\/\/snyk\.io\/test\/github\/jackadull\/jackadocs)
+
 Tool library for automated generation of tool documentation\. Can be used for creating `README.md` files\, but also for documentation books\, with multiple files\, in either HTML or Github\-Flavored Markdown\.
 
 ## Motivation

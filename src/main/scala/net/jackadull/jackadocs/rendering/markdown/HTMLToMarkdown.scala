@@ -75,6 +75,12 @@ object HTMLToMarkdown {
     case e:Elem if e.label == "code" || e.label == "tt" ⇒ MDCodeSpan(e.child text)
     case e:Elem if e.label == "del" ⇒ MDStrikethrough(convertInlines(e child))
     case e:Elem if e.label == "em" || e.label == "i" ⇒ MDEmphasis(convertInlines(e child))
+    case e:Elem if e.label == "img" ⇒
+      MDImage(
+        description = convertInlines(e attributes "alt"),
+        url = e.attributes("src").text,
+        title = e.attribute("title").map(_ text)
+      )
   }
 
   private def extractList(nodes:Seq[NodeSeq], ordered:Boolean, soFar:Vector[Seq[MDBlock]]=Vector()):MDList = nodes match {
