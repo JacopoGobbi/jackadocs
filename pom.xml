@@ -38,6 +38,11 @@
     <url>https://github.com/jackadull/jackadocs</url>
   </scm>
 
+  <issueManagement>
+    <system>GitHub Issues</system>
+    <url>https://github.com/orgs/jackadull/projects/1</url>
+  </issueManagement>
+
   <dependencies>
     <dependency>
       <groupId>org.scala-lang.modules</groupId>
