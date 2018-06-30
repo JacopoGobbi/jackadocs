@@ -7,11 +7,11 @@ import scala.language.postfixOps
 import scala.xml.NodeSeq
 
 trait BadgeGenerators {
-  def data:DocsMetaData
+  def docsMetaData:DocsMetaData
 
-  def codeFactorBadge:NodeSeq = new CodeFactorBadgeGenerator(data) badge
-  def coverallsBadge:NodeSeq = new CoverallsBadgeGenerator(data) badge
-  def mavenCentralBadge:NodeSeq = new MavenCentralBadgeGenerator(data) badge
-  def snykBadge:NodeSeq = new SnykBadgeGenerator(data) badge
-  def travisCIBadge:NodeSeq = new TravisCIBadgeGenerator(data) badge
+  def codeFactorBadge:NodeSeq = new CodeFactorBadgeGenerator(docsMetaData) badge
+  def coverallsBadge:NodeSeq = new CoverallsBadgeGenerator(docsMetaData) badge
+  def mavenCentralBadge:NodeSeq = new MavenCentralBadgeGenerator(docsMetaData) badge
+  def snykBadge:NodeSeq = new SnykBadgeGenerator(docsMetaData) badge
+  def travisCIBadge:NodeSeq = new TravisCIBadgeGenerator(docsMetaData) badge
 }
