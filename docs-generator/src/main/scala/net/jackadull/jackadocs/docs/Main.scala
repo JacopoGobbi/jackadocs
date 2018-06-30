@@ -11,6 +11,6 @@ object Main extends App with JackadocsMain {
 
   def organizationName = "jackadull"
   def projectDir = ".."
-  def projectInfo = JackadocsInfo.ProjectInfo
+  def projectInfo = JackadocsInfo
   def sourceRepoProvider = "github"
 }
