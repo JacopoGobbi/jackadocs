@@ -2,22 +2,22 @@ package net.jackadull.jackadocs.docs.readme
 
 import net.jackadull.jackadocs.structure.Chapter
 
-import scala.xml.NodeSeq
+import scala.xml.{NodeSeq, Text}
 
 object IntentedUse extends Chapter {
   def id = "intended_use"
-  def title = "Intended Use / Basic Idea"
+  def title = Text("Intended Use / Basic Idea")
 
   def contents:NodeSeq =
 <p>
-  There is no special magic in using <tt>jackadocs</tt>.
+  There is no special magic in using Jackadocs.
   The general approach is to create a class with a <tt>main</tt> method, which overwrites all the documentation when called.
-  <tt>jackadocs</tt> is just a library that gives some support with generating the documentation programmatically.
+  Jackadocs is just a library that gives some support with generating the documentation programmatically.
 </p>
 <p>
-  The text fragments that will be composed into the documentation files are XML constants in the Scala code.
+  Text fragments that will be composed into the documentation files are XML constants in the Scala code.
   This XML is interpreted as HTML.
-  When writing documentation in Markdown format, the HTML will be converted to Markdown.
+  When writing documentation in Markdown format, HTML will be converted to Markdown.
   (However, the conversion process is not very smart; don't expect miracles from it.
   It will do just enough to translate simple documentation, such as <tt>README.md</tt> files.)
 </p>
@@ -41,7 +41,7 @@ object IntentedUse extends Chapter {
 </p>
 <p>
   This is the basic idea.
-  As written initially, there is no further magic behind <tt>jackadocs</tt>.
+  As written initially, there is no further magic behind Jackadocs.
   The following chapters will share some further advice on how to handle certain things.
 </p>
 }

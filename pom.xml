@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>jackadocs_2.12</artifactId>
-  <version>0.3.1-SNAPSHOT</version>
+  <version>0.4.0-SNAPSHOT</version>
 
   <name>jackadocs</name>
   <description>Tool library for automatic generation of tool documentation.</description>

@@ -1,14 +1,14 @@
 # Jackadocs
 [![Travis CI](https\:\/\/travis\-ci\.org\/jackadull\/jackadocs\.svg)](https\:\/\/travis\-ci\.org\/jackadull\/jackadocs) [![Maven Central](https\:\/\/img\.shields\.io\/maven\-central\/v\/net\.jackadull\/jackadocs\_2\.12\.svg)](https\:\/\/search\.maven\.org\/\#search\%7Cga\%7C1\%7Cg\%3A\%22net\.jackadull\%22\%20AND\%20a\%3A\%22jackadocs\_2\.12\%22) [![Coveralls](https\:\/\/coveralls\.io\/repos\/github\/jackadull\/jackadocs\/badge\.svg)](https\:\/\/coveralls\.io\/github\/jackadull\/jackadocs) [![Codefactor](https\:\/\/www\.codefactor\.io\/repository\/github\/jackadull\/jackadocs\/badge)](https\:\/\/www\.codefactor\.io\/repository\/github\/jackadull\/jackadocs) [![Snyk](https\:\/\/snyk\.io\/test\/github\/jackadull\/jackadocs\/badge\.svg)](https\:\/\/snyk\.io\/test\/github\/jackadull\/jackadocs)
 
-Tool library for automated generation of tool documentation\. Can be used for creating `README.md` files\, but also for documentation books\, with multiple files\, in either HTML or Github\-Flavored Markdown\.
+Tool library for automated generation of tool documentation\. Can be used for creating `README.md` files\, but also for documentation books\, with multiple files\, in either HTML or [Github\-Flavored Markdown](https\:\/\/github\.github\.com\/gfm\/) \.
 
 ## Motivation
-`jackadocs` is useful for cases in which generation of documentation files should be partially dynamic\. That is\, the documentation contains parts that call Scala code for computing a part of the text\.
+Jackadocs is useful for cases in which generation of documentation files should be partially dynamic\. That is\, the documentation contains parts that call Scala code for computing a part of the text\.
 
-When writing and manually maintaining static Markdown or HTML files is sufficient for a certain project\, `jackadocs` is not needed\.
+When writing and manually maintaining static Markdown or HTML files is sufficient for a certain project\, Jackadocs is not needed\.
 
-Examples for meaningful usecases of `jackadocs` include\:
+Examples for meaningful usecases of Jackadocs include\:
 
 * Using the Maven resources plugin in order to include Maven properties in the documentation\, such as library versions\.
 
@@ -19,9 +19,9 @@ Examples for meaningful usecases of `jackadocs` include\:
 * Referring to code identifiers\, such as class names or constants in the code\, in the documentation\. Re\-generating the documentation then always inserts the most recent values of those code identifiers\.
 
 ## Intended Use \/ Basic Idea
-There is no special magic in using `jackadocs` \. The general approach is to create a class with a `main` method\, which overwrites all the documentation when called\. `jackadocs` is just a library that gives some support with generating the documentation programmatically\.
+There is no special magic in using Jackadocs\. The general approach is to create a class with a `main` method\, which overwrites all the documentation when called\. Jackadocs is just a library that gives some support with generating the documentation programmatically\.
 
-The text fragments that will be composed into the documentation files are XML constants in the Scala code\. This XML is interpreted as HTML\. When writing documentation in Markdown format\, the HTML will be converted to Markdown\. \(However\, the conversion process is not very smart\; don\'t expect miracles from it\. It will do just enough to translate simple documentation\, such as `README.md` files\.\)
+Text fragments that will be composed into the documentation files are XML constants in the Scala code\. This XML is interpreted as HTML\. When writing documentation in Markdown format\, HTML will be converted to Markdown\. \(However\, the conversion process is not very smart\; don\'t expect miracles from it\. It will do just enough to translate simple documentation\, such as `README.md` files\.\)
 
 [Here](https\:\/\/github\.com\/jackadull\/jackadocs\/blob\/master\/docs\-generator\/src\/main\/scala\/net\/jackadull\/jackadocs\/docs\/readme\/IntentedUse\.scala) is an example for the Scala source file from which this text is generated\.
 
@@ -31,10 +31,10 @@ The recommended name for this module is `docs-generator` \. An example can be fo
 
 Then\, every time before making a new release of the main module\, the `main` method of the `docs-generator` is to be called\. Documentation will be re\-generated\. By adhering to this general workflow\, documentation will always be up\-to date\.
 
-This is the basic idea\. As written initially\, there is no further magic behind `jackadocs` \. The following chapters will share some further advice on how to handle certain things\.
+This is the basic idea\. As written initially\, there is no further magic behind Jackadocs\. The following chapters will share some further advice on how to handle certain things\.
 
 ## Usage Example
-As described\, there is no special magic in using `jackadocs` \. Because there are many ways to use the tools presented by the `jackadocs` library\, the best introduction is an example\. The reader can then make up his or her own way of preference of using `jackadocs` \.
+As described\, there is no special magic in using Jackadocs\. Because there are many ways to use the tools presented by the Jackadocs library\, the best introduction is an example\. The reader can then make up his or her own way of preference of using Jackadocs\.
 
 The sub\-module and code that generates this text serves as the example\. It can be found in the [`docs-generator`](https\:\/\/github\.com\/jackadull\/jackadocs\/tree\/master\/docs\-generator) subfolder of the `jackadocs` project\. In it\, you will find\:
 
@@ -43,9 +43,9 @@ The sub\-module and code that generates this text serves as the example\. It can
 * Scala souce code under `src/main/scala` that contains all the data for generating this documentation\.
 
 ### How to Re\-Generate this Documentation
-The documentation of `jackadocs` \(i\.e\.\, the `README.md` in the `jackadocs` project root folder\) is \(re\-\)generated by choosing `docs-generator` as the current working directory and executing\:
+The documentation of Jackadocs \(i\.e\.\, the `README.md` in the `jackadocs` project root folder\) is \(re\-\)generated by choosing `docs-generator` as the current working directory and executing\:
 
-```
+```bash
 mvn clean compile exec:java
 ```
 Maven will then clean up the target folder\, compile the project\, and run the main class\. The details of this execution are defined in `docs-generator/pom.xml` \, in the configuration of the `exec-maven-plugin` \: As can bee seen there\, the main class \(i\.e\.\, the class that contains the `main` method\) is `net.jackadull.jackadocs.docs.Main` \. Also\, the first \(and only\) command\-line argument for the execution is configured as `${project.basedir}` \. This means that the path to the `docs-generator` project folder will be passed to the `main` method\.
@@ -71,7 +71,7 @@ The source code of the main class can be found [here](https\:\/\/github\.com\/ja
 
   In this case\, the version number to compare against is given as `JackadocsInfo.Version` \. This is possible because the parent project is configured in such a way that Maven will generate a static class called `JackadocsInfo` \, which contains the Maven module version as the constant named `Version` \.
 
-  If you are interested in copying this behaviour\, take a look at the Jackadocs main `pom.xml` \. The `templating-maven-plugin` does the job of creating said static class\. The template can be found under `src/main/java-templates` \.
+  If you are interested in copying this behaviour\, take a look at the Jackadocs main `pom.xml` \. The `templating-maven-plugin` does the job of creating said static class\. The template can be found under `src/main/scala-templates` \.
 
 * Generate the `README.md` file\:
 
@@ -80,7 +80,7 @@ The source code of the main class can be found [here](https\:\/\/github\.com\/ja
   ```
   Tells Jackadocs to generate the Markdown for `ReadmeRoot` and write it into `"../README.md"` \, relative to the project base directory that was passed in as a command\-line argument\.
 
-  `ReadmeRoot` can be found [here](https\:\/\/github\.com\/jackadull\/jackadocs\/blob\/master\/docs\-generator\/src\/main\/scala\/net\/jackadull\/jackadocs\/docs\/readme\/ReadmeRoot\.scala) \. The contents of this object follow the chapter structure\, which gets described next\.
+  `ReadmeRoot` can be found [here](https\:\/\/github\.com\/jackadull\/jackadocs\/blob\/master\/docs\-generator\/src\/main\/scala\/net\/jackadull\/jackadocs\/docs\/ReadmeRoot\.scala) \. The contents of this object follow the chapter structure\, which gets described next\.
 
 ## Chapter Structure
 The contents of every Jackadocs\-based document are laid out in a hierarchy of chapters and sub\-chapters\. Chapters are Scala objects\. There are two major ways how to declare chapters in the code\:
@@ -93,7 +93,7 @@ The root\-level object for every Jackadocs\-based documents is an instance of `C
 
 Of course\, the structure is recursive\. Sub\-chapters can have sub\-chapters of their own\, and so on\. In this way\, a tree\-like chapter structure gets assembled\.
 
-Looking at [the source code of`ReadmeRoot`](https\:\/\/github\.com\/jackadull\/jackadocs\/blob\/master\/docs\-generator\/src\/main\/scala\/net\/jackadull\/jackadocs\/docs\/readme\/ReadmeRoot\.scala) can be a helpful illustration of these abstract descriptions\.
+Looking at [the source code of`ReadmeRoot`](https\:\/\/github\.com\/jackadull\/jackadocs\/blob\/master\/docs\-generator\/src\/main\/scala\/net\/jackadull\/jackadocs\/docs\/ReadmeRoot\.scala) can be a helpful illustration of these abstract descriptions\.
 
 ## Rendering Process
 As explained before\, the command `jackadocs generateAt "../README.md" markdownFor ReadmeRoot` renders the Markdown version of the root chapter into the given file\.
@@ -155,6 +155,8 @@ These HTML tags get translated to Markdown inlines\:
 * `<del>…</del>` \: Gets converted to Markdown strikethrough \(GFM extension\)\. Can contain other inlines as children\.
 
 * `<em>…</em>` or `<i>…</i>` \: Gets converted to Markdown emphasis\.
+
+* `<img src="..." alt="..."/>` \: Gets translated into a Markdown image\.
 
 ### Chapter Numbering
 The rendering process also prefixes chapter numbers before the titles\. The numbering strategy is passed into the process as an instance of the `ChapterNumbering` trait\.

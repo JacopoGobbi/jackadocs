@@ -2,11 +2,11 @@ package net.jackadull.jackadocs.docs.readme
 
 import net.jackadull.jackadocs.structure.Chapter
 
-import scala.xml.NodeSeq
+import scala.xml.{NodeSeq, Text}
 
 object Roadmap extends Chapter {
   def id = "roadmap"
-  def title = "Roadmap"
+  def title = Text("Roadmap")
 
   def contents:NodeSeq =
 <p>

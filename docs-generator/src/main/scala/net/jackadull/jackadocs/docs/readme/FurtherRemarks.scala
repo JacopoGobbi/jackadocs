@@ -2,11 +2,11 @@ package net.jackadull.jackadocs.docs.readme
 
 import net.jackadull.jackadocs.structure.Chapter
 
-import scala.xml.NodeSeq
+import scala.xml.{NodeSeq, Text}
 
 object FurtherRemarks extends Chapter {
   def id = "further_remarks"
-  def title = "Further Remarks"
+  def title = Text("Further Remarks")
 
   def contents:NodeSeq =
 <ul>

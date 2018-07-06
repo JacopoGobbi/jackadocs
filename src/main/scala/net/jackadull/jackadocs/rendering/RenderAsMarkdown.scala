@@ -13,7 +13,7 @@ object RenderAsMarkdown {
         case Seq(chapter1, moreChapters@_*) ⇒
           val (chapterNumber, cn2) = cn count chapter1
           val chapterName:Seq[MDInline] =
-            (if(chapterNumber nonEmpty) Seq(MDInlineText(s"$chapterNumber ")) else Seq()) :+ MDInlineText(chapter1 title)
+            (if(chapterNumber nonEmpty) Seq(MDInlineText(s"$chapterNumber ")) else Seq()) ++ (HTMLToMarkdown inline  (chapter1 title))
           val (renderedSubChapters, cn3) = recurse(chapter1 subChapters, cn2 subChapters, depth+1, Vector())
           val chapterLocal:Seq[MDBlock] =
             (MDATXHeading(depth min 6, chapterName) +: HTMLToMarkdown(chapter1 contents)) ++

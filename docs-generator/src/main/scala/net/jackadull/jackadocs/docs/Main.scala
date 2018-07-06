@@ -1,8 +1,7 @@
 package net.jackadull.jackadocs.docs
 
 import net.jackadull.jackadocs.JackadocsInfo
-import net.jackadull.jackadocs.docs.readme.ReadmeRoot
-import net.jackadull.jackadocs.execution.JackadocsMain
+import net.jackadull.jackadocs.execution.{JackadocsMain, JackadocsProjectInfo}
 
 import scala.language.postfixOps
 
@@ -11,6 +10,6 @@ object Main extends App with JackadocsMain {
 
   def organizationName = "jackadull"
   def projectDir = ".."
-  def projectInfo = JackadocsInfo
+  def projectInfo = new JackadocsInfo with JackadocsProjectInfo
   def sourceRepoProvider = "github"
 }

@@ -2,10 +2,10 @@ package net.jackadull.jackadocs.docs.readme
 
 import net.jackadull.jackadocs.structure.Chapter
 
-import scala.xml.NodeSeq
+import scala.xml.{NodeSeq, Text}
 
 object ChapterStructure extends Chapter {
-  def title = "Chapter Structure"
+  def title = Text("Chapter Structure")
   def id = "chapter_structure"
 
   def contents:NodeSeq =
@@ -36,6 +36,6 @@ object ChapterStructure extends Chapter {
   In this way, a tree-like chapter structure gets assembled.
 </p>
 <p>
-  Looking at <a href="https://github.com/jackadull/jackadocs/blob/master/docs-generator/src/main/scala/net/jackadull/jackadocs/docs/readme/ReadmeRoot.scala">the source code of <tt>ReadmeRoot</tt></a> can be a helpful illustration of these abstract descriptions.
+  Looking at <a href="https://github.com/jackadull/jackadocs/blob/master/docs-generator/src/main/scala/net/jackadull/jackadocs/docs/ReadmeRoot.scala">the source code of <tt>ReadmeRoot</tt></a> can be a helpful illustration of these abstract descriptions.
 </p>
 }

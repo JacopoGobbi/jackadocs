@@ -3,11 +3,11 @@ package net.jackadull.jackadocs.docs.readme
 import net.jackadull.jackadocs.structure.Chapter
 
 import scala.language.postfixOps
-import scala.xml.NodeSeq
+import scala.xml.{NodeSeq, Text}
 
 object RenderingProcess extends Chapter {
   def id = "rendering_process"
-  def title = "Rendering Process"
+  def title = Text("Rendering Process")
 
   def contents:NodeSeq =
 <p>
@@ -20,7 +20,7 @@ object RenderingProcess extends Chapter {
 </p>
 
   override def subChapters:Seq[Chapter] = Seq(
-    Chapter("html_to_markdown_conversion", "HTML to Markdown Conversion",
+    Chapter("html_to_markdown_conversion", Text("HTML to Markdown Conversion"),
 <p>
   When converting from source HTML to Markdown, a very pragmatic process is used.
   It recognizes specific patterns of HTML code and converts those into specific patterns of Markdown code.
@@ -36,7 +36,7 @@ object RenderingProcess extends Chapter {
   <a href="https://github.github.com/gfm/">Here is a link</a> to the specification.)
 </p>
       ,subChapters=Seq(
-        Chapter("markdown_basics_inlines_and_blocks", "Markdown Basics: Inlines and Blocks",
+        Chapter("markdown_basics_inlines_and_blocks", Text("Markdown Basics: Inlines and Blocks"),
 <p>
   When composing HTML that translates well to Markdown, keep in mind one foundation of Github-Flavored Markdown:
   Every Markdown element is either a block or an inline.
@@ -68,7 +68,7 @@ object RenderingProcess extends Chapter {
   plain text, bold or italic formatting, hyperlinks, inline code spans, etc.
 </p>
         ),
-        Chapter("list_of_supported_block_tags", "List of Supported Block Tags",
+        Chapter("list_of_supported_block_tags", Text("List of Supported Block Tags"),
 <p>
   What follows is a list of supported HTML tags that get translated to Markdown blocks.
 </p>
@@ -120,7 +120,7 @@ object RenderingProcess extends Chapter {
   </li>
 </ul>
         ),
-        Chapter("list_of_supported_inline_tags", "List of Supported Inline Tags",
+        Chapter("list_of_supported_inline_tags", Text("List of Supported Inline Tags"),
 <p>
   These HTML tags get translated to Markdown inlines:
 </p>
@@ -166,11 +166,17 @@ object RenderingProcess extends Chapter {
       Gets converted to Markdown emphasis.
     </p>
   </li>
+  <li>
+    <p>
+      <tt>{<img src="..." alt="..." /> toString}</tt>:
+      Gets translated into a Markdown image.
+    </p>
+  </li>
 </ul>
         )
       )
     ),
-    Chapter("chapter_numbering", "Chapter Numbering",
+    Chapter("chapter_numbering", Text("Chapter Numbering"),
 <p>
   The rendering process also prefixes chapter numbers before the titles.
   The numbering strategy is passed into the process as an instance of the <tt>ChapterNumbering</tt> trait.
@@ -229,7 +235,7 @@ object RenderingProcess extends Chapter {
   A simple alternative is <tt>ChapterNumbering.decimal</tt>.
 </p>
     ),
-    Chapter("debug_markdown_tree_output", "Debug Markdown Tree Output",
+    Chapter("debug_markdown_tree_output", Text("Debug Markdown Tree Output"),
 <p>
   If anything goes bad with regards to Markdown rendering, you can always print a debug tree of the Markdown view.
   For example:
