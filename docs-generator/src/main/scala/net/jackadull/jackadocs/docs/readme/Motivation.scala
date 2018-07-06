@@ -1,14 +1,13 @@
 package net.jackadull.jackadocs.docs.readme
 
-import net.jackadull.jackadocs.structure.Chapter
+import net.jackadull.jackadocs.structure.{Chapter, RootChapter}
 
-import scala.xml.{NodeSeq, Text}
+import scala.xml.NodeSeq
 
 object Motivation extends Chapter {
-  def id = "motivation"
-  def title = Text("Motivation")
+  def title = "Motivation"
 
-  def contents:NodeSeq =
+  def contents(root:RootChapter):NodeSeq =
 <p>
   Jackadocs is useful for cases in which generation of documentation files should be partially dynamic.
   That is, the documentation contains parts that call Scala code for computing a part of the text.

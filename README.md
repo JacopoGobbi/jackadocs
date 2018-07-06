@@ -201,8 +201,6 @@ Here are some features that are considered or planned for future implementation\
 
 * Table of contents
 
-* Automatic generation of chapter IDs\, compatible with Github Markdown header anchors
-
 * Links to other chapters
 
 * `ChapterNumbering` with support for different kinds of numberings on different levels

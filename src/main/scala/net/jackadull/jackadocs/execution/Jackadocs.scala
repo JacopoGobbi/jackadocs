@@ -5,7 +5,7 @@ import java.nio.file.{FileSystems, Files, Path}
 import net.jackadull.jackadocs.execution.Jackadocs.{Generate, GenerateImpl}
 import net.jackadull.jackadocs.rendering.markdown.MDWrite
 import net.jackadull.jackadocs.rendering.{ChapterNumbering, RenderAsMarkdown}
-import net.jackadull.jackadocs.structure.Chapter
+import net.jackadull.jackadocs.structure.RootChapter
 
 import scala.language.postfixOps
 import scala.xml.XML
@@ -28,10 +28,10 @@ object Jackadocs {
   private def path(p:String):Path = (FileSystems getDefault) getPath p
 
   trait Generate {
-    def markdownFor(chapter:Chapter, chapterNumbering:ChapterNumbering=ChapterNumbering.empty):Jackadocs
+    def markdownFor(chapter:RootChapter, chapterNumbering:ChapterNumbering=ChapterNumbering.empty):Jackadocs
   }
   private final class GenerateImpl(target:Path, jackadocs:Jackadocs) extends Generate {
-    def markdownFor(chapter:Chapter, chapterNumbering:ChapterNumbering):Jackadocs =
+    def markdownFor(chapter:RootChapter, chapterNumbering:ChapterNumbering):Jackadocs =
       output(MDWrite(RenderAsMarkdown(chapter, chapterNumbering), _))
 
     private def output(f:Appendable⇒Unit):Jackadocs = {

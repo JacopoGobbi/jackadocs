@@ -2,15 +2,14 @@ package net.jackadull.jackadocs.docs
 
 import net.jackadull.jackadocs.docs.readme._
 import net.jackadull.jackadocs.structure.badges.BadgeGenerators
-import net.jackadull.jackadocs.structure.{Chapter, DocsMetaData}
+import net.jackadull.jackadocs.structure.{Chapter, DocsMetaData, RootChapter}
 
 import scala.xml.{NodeSeq, Text}
 
-object ReadmeRoot extends Chapter with BadgeGenerators {
-  def id = "readme_begin"
+object ReadmeRoot extends RootChapter with BadgeGenerators {
   def title = Text("Jackadocs")
 
-  def contents:NodeSeq =
+  def contents(root:RootChapter):NodeSeq =
 <p>{travisCIBadge} {mavenCentralBadge} {coverallsBadge} {codeFactorBadge} {snykBadge}</p>
 <p>
   Tool library for automated generation of tool documentation.
