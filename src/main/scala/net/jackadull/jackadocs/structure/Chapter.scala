@@ -7,9 +7,11 @@ trait Chapter {
   def title:NodeSeq
   def contents(root:RootChapter):NodeSeq
 
+  def contentsBeforeTOC(root:RootChapter):NodeSeq = NodeSeq.Empty
   def id(root:RootChapter):String = (root idOfChapter) getOrElse (this, titleAsIDBase)
   def subChapters:Seq[Chapter] = Seq()
   def titleAsIDBase:String = title.text.toLowerCase.replaceAll("""[^\w\- ]""", "").replace(' ', '-')
+  def toc:Boolean = false
 
   protected implicit def _stringToNodeSeq(str:String):NodeSeq = Text(str)
 }

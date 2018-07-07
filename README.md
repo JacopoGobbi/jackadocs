@@ -1,6 +1,22 @@
 # Jackadocs
 [![Travis CI](https\:\/\/travis\-ci\.org\/jackadull\/jackadocs\.svg)](https\:\/\/travis\-ci\.org\/jackadull\/jackadocs) [![Maven Central](https\:\/\/img\.shields\.io\/maven\-central\/v\/net\.jackadull\/jackadocs\_2\.12\.svg)](https\:\/\/search\.maven\.org\/\#search\%7Cga\%7C1\%7Cg\%3A\%22net\.jackadull\%22\%20AND\%20a\%3A\%22jackadocs\_2\.12\%22) [![Coveralls](https\:\/\/coveralls\.io\/repos\/github\/jackadull\/jackadocs\/badge\.svg)](https\:\/\/coveralls\.io\/github\/jackadull\/jackadocs) [![Codefactor](https\:\/\/www\.codefactor\.io\/repository\/github\/jackadull\/jackadocs\/badge)](https\:\/\/www\.codefactor\.io\/repository\/github\/jackadull\/jackadocs) [![Snyk](https\:\/\/snyk\.io\/test\/github\/jackadull\/jackadocs\/badge\.svg)](https\:\/\/snyk\.io\/test\/github\/jackadull\/jackadocs)
 
+* [Motivation](\#motivation)
+* [Intended Use \/ Basic Idea](\#intended\-use\-\-basic\-idea)
+* [Usage Example](\#usage\-example)
+  * [How to Re\-Generate this Documentation](\#how\-to\-re\-generate\-this\-documentation)
+  * [The Main Class](\#the\-main\-class)
+* [Chapter Structure](\#chapter\-structure)
+* [Rendering Process](\#rendering\-process)
+  * [HTML to Markdown Conversion](\#html\-to\-markdown\-conversion)
+    * [Markdown Basics\: Inlines and Blocks](\#markdown\-basics\-inlines\-and\-blocks)
+    * [List of Supported Block Tags](\#list\-of\-supported\-block\-tags)
+    * [List of Supported Inline Tags](\#list\-of\-supported\-inline\-tags)
+  * [Chapter Numbering](\#chapter\-numbering)
+  * [Debug Markdown Tree Output](\#debug\-markdown\-tree\-output)
+* [Further Remarks](\#further\-remarks)
+* [Roadmap](\#roadmap)
+
 Tool library for automated generation of tool documentation\. Can be used for creating `README.md` files\, but also for documentation books\, with multiple files\, in either HTML or [Github\-Flavored Markdown](https\:\/\/github\.github\.com\/gfm\/) \.
 
 ## Motivation

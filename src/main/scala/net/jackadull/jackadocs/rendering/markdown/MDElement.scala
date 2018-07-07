@@ -38,7 +38,7 @@ final case class MDInlineText(data:String) extends MDInline {
 final case class MDLink(text:Seq[MDInline], destination:String, title:Option[String]) extends MDInline {
   def treeStructure(linePrefix:String):String = s"${linePrefix}Link destination='$destination' title=$title\n${text.map(_.treeStructure(s"$linePrefix  ")) mkString}"
 }
-final case class MDList(ordered:Boolean, items:Seq[Seq[MDBlock]]) extends MDBlock {
+final case class MDList(ordered:Boolean, items:Seq[Seq[MDBlock]], tight:Boolean=false) extends MDBlock {
   def treeStructure(linePrefix:String):String = s"${linePrefix}List ordered=$ordered\n${items.map(item ⇒ s"$linePrefix  item\n${item.map(_.treeStructure(s"$linePrefix    ")) mkString}") mkString}"
 }
 final case class MDParagraph(contents:Seq[MDInline]) extends MDBlock {

@@ -5,7 +5,7 @@ import scala.language.postfixOps
 
 object MDWrite {
   def apply(blocks:Traversable[MDBlock], out:Appendable) {
-    def renderBlock(block:MDBlock, writer:LineWriter):LineWriter = block match {
+    def renderBlock(block:MDBlock, writer:LineWriter, tight:Boolean=false):LineWriter = block match {
       case MDATXHeading(level, contents) ⇒
         renderInlines(contents, writer pushLinePrefix ("#"*level+" ", " "*(level+1)) withoutLeadingWhitespace()) popLinePrefix() nextLine()
       case MDBlockQuote(contents) ⇒
@@ -14,16 +14,18 @@ object MDWrite {
         lines.foldLeft(writer append "```" append infoString nextLine()) {(w,line) ⇒
           w append (line data) nextLine()
         } append "```" nextLine()
-      case MDList(ordered, items) ⇒
-        items.zipWithIndex.foldLeft(writer) {case (w, (item, index)) ⇒
+      case MDList(ordered, items, tightList) ⇒
+        val w2 = items.zipWithIndex.foldLeft(writer) {case (w, (item, index)) ⇒
           val firstLinePrefix = if(ordered) s"${index+1}. " else "* "
           val followingLinesPrefix = " " * (firstLinePrefix length)
-          item.foldLeft(w pushLinePrefix (firstLinePrefix, followingLinesPrefix)) {(w2, i) ⇒ renderBlock(i, w2)} popLinePrefix()
+          item.foldLeft(w pushLinePrefix (firstLinePrefix, followingLinesPrefix)) {(w2, i) ⇒ renderBlock(i, w2, tightList)} popLinePrefix()
         }
+        if(!tight && tightList) w2 nextLine() else w2
       case MDParagraph(contents) ⇒
-        contents.zipWithIndex.foldLeft(writer) {case (w, (t, index)) ⇒
+        val w2 = contents.zipWithIndex.foldLeft(writer) {case (w, (t, index)) ⇒
           if(index==0) renderInline(t, w withoutLeadingWhitespace()) else renderInline(t, w append ' ' withoutLeadingWhitespace())
-        } nextLine() nextLine()
+        } nextLine()
+        if(tight) w2 else w2 nextLine()
       case MDThematicBreak ⇒ writer nextLine() append "---" nextLine() nextLine()
     }
 
