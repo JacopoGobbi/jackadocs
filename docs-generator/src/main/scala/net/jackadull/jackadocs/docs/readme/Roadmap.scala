@@ -12,9 +12,7 @@ object Roadmap extends Chapter {
   Here are some features that are considered or planned for future implementation:
 </p>
 <ul>
-  <li>Table of contents</li>
   <li>Links to other chapters</li>
-  <li><p><tt>ChapterNumbering</tt> with support for different kinds of numberings on different levels</p></li>
   <li>Migrate the whole Markdown to <a href="https://github.com/jackadull/gfm">Jackadull GFM</a></li>
 </ul>
 }

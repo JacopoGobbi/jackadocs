@@ -6,41 +6,37 @@ import net.jackadull.jackadocs.structure.{Chapter, RootChapter}
 import scala.language.postfixOps
 
 object RenderAsMarkdown {
-  def apply(root:RootChapter, chapterNumbering:ChapterNumbering):Seq[MDBlock] = {
+  def apply(root:RootChapter):Seq[MDBlock] = {
 
-    def recurse(toRender:Seq[Chapter], cn:ChapterNumbering, depth:Int, soFar:Seq[MDBlock]):(Seq[MDBlock],ChapterNumbering) =
+    def recurse(toRender:Seq[Chapter], depth:Int, soFar:Seq[MDBlock]):Seq[MDBlock] =
       toRender match {
-        case Seq() ⇒ (soFar, cn)
+        case Seq() ⇒ soFar
         case Seq(chapter1, moreChapters@_*) ⇒
-          val (chapterNumber, cn2) = cn count chapter1
-          val chapterName:Seq[MDInline] =
-            (if(chapterNumber nonEmpty) Seq(MDInlineText(s"$chapterNumber ")) else Seq()) ++ (HTMLToMarkdown inline  (chapter1 title))
-          val (renderedSubChapters, cn3) = recurse(chapter1 subChapters, cn2 subChapters, depth+1, Vector())
-          val maybeTOC = if(chapter1 toc) toc(chapter1, cn2) else Seq()
+          val chapterName:Seq[MDInline] = HTMLToMarkdown inline (chapter1 titleWithNumber root)
+          val renderedSubChapters = recurse(chapter1 subChapters, depth+1, Vector())
+          val maybeTOC = if(chapter1 toc) toc(chapter1) else Seq()
           val chapterLocal:Seq[MDBlock] =
             (((MDATXHeading(depth min 6, chapterName) +: HTMLToMarkdown(chapter1 contentsBeforeTOC root)) ++ maybeTOC) ++ HTMLToMarkdown(chapter1 contents root)) ++
               renderedSubChapters
-          recurse(moreChapters, cn3 parent, depth, soFar ++ chapterLocal)
+          recurse(moreChapters, depth, soFar ++ chapterLocal)
       }
 
-    def toc(chapter:Chapter, cn:ChapterNumbering):Seq[MDBlock] = {
-      def ofSubChapters(parent:Chapter, cn:ChapterNumbering):(Seq[MDBlock],ChapterNumbering) = parent subChapters match {
-        case Seq() ⇒ (Seq(), cn)
+    def toc(chapter:Chapter):Seq[MDBlock] = {
+      def ofSubChapters(parent:Chapter):Seq[MDBlock] = parent subChapters match {
+        case Seq() ⇒ Seq()
         case _ ⇒
-          val (bulletPoints:Seq[Seq[MDBlock]], cn2:ChapterNumbering) = (parent subChapters).foldLeft(Seq[Seq[MDBlock]]() → (cn subChapters)) {
-            case ((acc, cn3), subChapter) ⇒
-              val (chapterNumber, cn4) = cn3 count subChapter
-              val chapterName:Seq[MDInline] =
-                (if(chapterNumber nonEmpty) Seq(MDInlineText(s"$chapterNumber ")) else Seq()) ++ (HTMLToMarkdown inline (subChapter title))
-              val (subTOC, cn5) = ofSubChapters(subChapter, cn4)
+          val bulletPoints:Seq[Seq[MDBlock]] = (parent subChapters).foldLeft(Seq[Seq[MDBlock]]()) {
+            (acc, subChapter) ⇒
+              val chapterName:Seq[MDInline] = HTMLToMarkdown inline (subChapter titleWithNumber root)
+              val subTOC = ofSubChapters(subChapter)
               val link = MDLink(chapterName, s"#${subChapter id root}", None)
-              (acc ++ Seq(Seq(MDParagraph(Seq(link))) ++ subTOC), cn5)
+              acc ++ Seq(Seq(MDParagraph(Seq(link))) ++ subTOC)
           }
-          (Seq(MDList(ordered = false, bulletPoints, tight = true)), cn2 parent)
+          Seq(MDList(ordered = false, bulletPoints, tight = true))
       }
-      ofSubChapters(chapter, cn) _1
+      ofSubChapters(chapter)
     }
 
-    recurse(Vector(root), chapterNumbering, 1, Vector()) _1
+    recurse(Vector(root), 1, Vector())
   }
 }

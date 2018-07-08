@@ -8,9 +8,15 @@ trait Chapter {
   def contents(root:RootChapter):NodeSeq
 
   def contentsBeforeTOC(root:RootChapter):NodeSeq = NodeSeq.Empty
-  def id(root:RootChapter):String = (root idOfChapter) getOrElse (this, titleAsIDBase)
+  def id(root:RootChapter):String = (root idOfChapter) getOrElse (this, title.text.toLowerCase.replaceAll("""[^\w\- ]""", "").replace(' ', '-'))
   def subChapters:Seq[Chapter] = Seq()
-  def titleAsIDBase:String = title.text.toLowerCase.replaceAll("""[^\w\- ]""", "").replace(' ', '-')
+  def titleWithNumber(root:RootChapter):NodeSeq = {
+    val num = (root numberOfChapter) getOrElse (this, "")
+    if(num isEmpty) title else title match {
+      case Text(txt) ⇒ Text(s"$num $txt")
+      case _ ⇒ Text(s"$num ") ++ title
+    }
+  }
   def toc:Boolean = false
 
   protected implicit def _stringToNodeSeq(str:String):NodeSeq = Text(str)

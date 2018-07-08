@@ -1,25 +1,25 @@
 # Jackadocs
 [![Travis CI](https\:\/\/travis\-ci\.org\/jackadull\/jackadocs\.svg)](https\:\/\/travis\-ci\.org\/jackadull\/jackadocs) [![Maven Central](https\:\/\/img\.shields\.io\/maven\-central\/v\/net\.jackadull\/jackadocs\_2\.12\.svg)](https\:\/\/search\.maven\.org\/\#search\%7Cga\%7C1\%7Cg\%3A\%22net\.jackadull\%22\%20AND\%20a\%3A\%22jackadocs\_2\.12\%22) [![Coveralls](https\:\/\/coveralls\.io\/repos\/github\/jackadull\/jackadocs\/badge\.svg)](https\:\/\/coveralls\.io\/github\/jackadull\/jackadocs) [![Codefactor](https\:\/\/www\.codefactor\.io\/repository\/github\/jackadull\/jackadocs\/badge)](https\:\/\/www\.codefactor\.io\/repository\/github\/jackadull\/jackadocs) [![Snyk](https\:\/\/snyk\.io\/test\/github\/jackadull\/jackadocs\/badge\.svg)](https\:\/\/snyk\.io\/test\/github\/jackadull\/jackadocs)
 
-* [Motivation](\#motivation)
-* [Intended Use \/ Basic Idea](\#intended\-use\-\-basic\-idea)
-* [Usage Example](\#usage\-example)
-  * [How to Re\-Generate this Documentation](\#how\-to\-re\-generate\-this\-documentation)
-  * [The Main Class](\#the\-main\-class)
-* [Chapter Structure](\#chapter\-structure)
-* [Rendering Process](\#rendering\-process)
-  * [HTML to Markdown Conversion](\#html\-to\-markdown\-conversion)
-    * [Markdown Basics\: Inlines and Blocks](\#markdown\-basics\-inlines\-and\-blocks)
-    * [List of Supported Block Tags](\#list\-of\-supported\-block\-tags)
-    * [List of Supported Inline Tags](\#list\-of\-supported\-inline\-tags)
-  * [Chapter Numbering](\#chapter\-numbering)
-  * [Debug Markdown Tree Output](\#debug\-markdown\-tree\-output)
-* [Further Remarks](\#further\-remarks)
-* [Roadmap](\#roadmap)
+* [1\. Motivation](\#1\-motivation)
+* [2\. Intended Use \/ Basic Idea](\#2\-intended\-use\-\-basic\-idea)
+* [3\. Usage Example](\#3\-usage\-example)
+  * [3\.1\. How to Re\-Generate this Documentation](\#31\-how\-to\-re\-generate\-this\-documentation)
+  * [3\.2\. The Main Class](\#32\-the\-main\-class)
+* [4\. Chapter Structure](\#4\-chapter\-structure)
+* [5\. Rendering Process](\#5\-rendering\-process)
+  * [5\.1\. HTML to Markdown Conversion](\#51\-html\-to\-markdown\-conversion)
+    * [5\.1\.1\. Markdown Basics\: Inlines and Blocks](\#511\-markdown\-basics\-inlines\-and\-blocks)
+    * [5\.1\.2\. List of Supported Block Tags](\#512\-list\-of\-supported\-block\-tags)
+    * [5\.1\.3\. List of Supported Inline Tags](\#513\-list\-of\-supported\-inline\-tags)
+  * [5\.2\. Chapter Numbering](\#52\-chapter\-numbering)
+  * [5\.3\. Debug Markdown Tree Output](\#53\-debug\-markdown\-tree\-output)
+* [6\. Further Remarks](\#6\-further\-remarks)
+* [7\. Roadmap](\#7\-roadmap)
 
 Tool library for automated generation of tool documentation\. Can be used for creating `README.md` files\, but also for documentation books\, with multiple files\, in either HTML or [Github\-Flavored Markdown](https\:\/\/github\.github\.com\/gfm\/) \.
 
-## Motivation
+## 1\. Motivation
 Jackadocs is useful for cases in which generation of documentation files should be partially dynamic\. That is\, the documentation contains parts that call Scala code for computing a part of the text\.
 
 When writing and manually maintaining static Markdown or HTML files is sufficient for a certain project\, Jackadocs is not needed\.
@@ -34,7 +34,7 @@ Examples for meaningful usecases of Jackadocs include\:
 
 * Referring to code identifiers\, such as class names or constants in the code\, in the documentation\. Re\-generating the documentation then always inserts the most recent values of those code identifiers\.
 
-## Intended Use \/ Basic Idea
+## 2\. Intended Use \/ Basic Idea
 There is no special magic in using Jackadocs\. The general approach is to create a class with a `main` method\, which overwrites all the documentation when called\. Jackadocs is just a library that gives some support with generating the documentation programmatically\.
 
 Text fragments that will be composed into the documentation files are XML constants in the Scala code\. This XML is interpreted as HTML\. When writing documentation in Markdown format\, HTML will be converted to Markdown\. \(However\, the conversion process is not very smart\; don\'t expect miracles from it\. It will do just enough to translate simple documentation\, such as `README.md` files\.\)
@@ -49,7 +49,7 @@ Then\, every time before making a new release of the main module\, the `main` me
 
 This is the basic idea\. As written initially\, there is no further magic behind Jackadocs\. The following chapters will share some further advice on how to handle certain things\.
 
-## Usage Example
+## 3\. Usage Example
 As described\, there is no special magic in using Jackadocs\. Because there are many ways to use the tools presented by the Jackadocs library\, the best introduction is an example\. The reader can then make up his or her own way of preference of using Jackadocs\.
 
 The sub\-module and code that generates this text serves as the example\. It can be found in the [`docs-generator`](https\:\/\/github\.com\/jackadull\/jackadocs\/tree\/master\/docs\-generator) subfolder of the `jackadocs` project\. In it\, you will find\:
@@ -58,7 +58,7 @@ The sub\-module and code that generates this text serves as the example\. It can
 
 * Scala souce code under `src/main/scala` that contains all the data for generating this documentation\.
 
-### How to Re\-Generate this Documentation
+### 3\.1\. How to Re\-Generate this Documentation
 The documentation of Jackadocs \(i\.e\.\, the `README.md` in the `jackadocs` project root folder\) is \(re\-\)generated by choosing `docs-generator` as the current working directory and executing\:
 
 ```bash
@@ -66,7 +66,7 @@ mvn clean compile exec:java
 ```
 Maven will then clean up the target folder\, compile the project\, and run the main class\. The details of this execution are defined in `docs-generator/pom.xml` \, in the configuration of the `exec-maven-plugin` \: As can bee seen there\, the main class \(i\.e\.\, the class that contains the `main` method\) is `net.jackadull.jackadocs.docs.Main` \. Also\, the first \(and only\) command\-line argument for the execution is configured as `${project.basedir}` \. This means that the path to the `docs-generator` project folder will be passed to the `main` method\.
 
-### The Main Class
+### 3\.2\. The Main Class
 The source code of the main class can be found [here](https\:\/\/github\.com\/jackadull\/jackadocs\/blob\/kickoff\/docs\-generator\/src\/main\/scala\/net\/jackadull\/jackadocs\/docs\/Main\.scala) \. The main class does very few things\:
 
 * Create the main `Jackadocs` instance\:
@@ -98,7 +98,7 @@ The source code of the main class can be found [here](https\:\/\/github\.com\/ja
 
   `ReadmeRoot` can be found [here](https\:\/\/github\.com\/jackadull\/jackadocs\/blob\/master\/docs\-generator\/src\/main\/scala\/net\/jackadull\/jackadocs\/docs\/ReadmeRoot\.scala) \. The contents of this object follow the chapter structure\, which gets described next\.
 
-## Chapter Structure
+## 4\. Chapter Structure
 The contents of every Jackadocs\-based document are laid out in a hierarchy of chapters and sub\-chapters\. Chapters are Scala objects\. There are two major ways how to declare chapters in the code\:
 
 1. As top\-level\, standalone Scala `object` types that extend the `Chapter` trait\. [The code for this very chapter](https\:\/\/github\.com\/jackadull\/jackadocs\/blob\/master\/docs\-generator\/src\/main\/scala\/net\/jackadull\/jackadocs\/docs\/readme\/ChapterStructure\.scala) is an example of this\.
@@ -111,19 +111,19 @@ Of course\, the structure is recursive\. Sub\-chapters can have sub\-chapters of
 
 Looking at [the source code of`ReadmeRoot`](https\:\/\/github\.com\/jackadull\/jackadocs\/blob\/master\/docs\-generator\/src\/main\/scala\/net\/jackadull\/jackadocs\/docs\/ReadmeRoot\.scala) can be a helpful illustration of these abstract descriptions\.
 
-## Rendering Process
+## 5\. Rendering Process
 As explained before\, the command `jackadocs generateAt "../README.md" markdownFor ReadmeRoot` renders the Markdown version of the root chapter into the given file\.
 
 The source format of the data is always HTML\, as can be seen when looking at the Scala sources that generate this document\. In this case however\, the output format is Markdown\. This obviously means that some form of conversion from HTML to Markdown is going on as part of the rendering process\.
 
-### HTML to Markdown Conversion
+### 5\.1\. HTML to Markdown Conversion
 When converting from source HTML to Markdown\, a very pragmatic process is used\. It recognizes specific patterns of HTML code and converts those into specific patterns of Markdown code\. Everything that does not match those expected patterns gets ignored \(or converted to plain text\) and will therefore probably yield an unwanted result\.
 
 That is to say\, the HTML\-to\-Markdown conversion is far from trying to be smart\. But if you follow certain simple rules when assembling the HTML\, you will get the desired result\.
 
 \(Note\: When speaking of Markdown within the scope of this document\, this specifically refers to Github\-Flavored Markdown\. [Here is a link](https\:\/\/github\.github\.com\/gfm\/) to the specification\.\)
 
-#### Markdown Basics\: Inlines and Blocks
+#### 5\.1\.1\. Markdown Basics\: Inlines and Blocks
 When composing HTML that translates well to Markdown\, keep in mind one foundation of Github\-Flavored Markdown\: Every Markdown element is either a block or an inline\. The concept is very similar to HTML\/CSS block and inline rendering\.
 
 Blocks are top\-level constructs\. They can not be nested arbitrarily\.
@@ -136,7 +136,7 @@ However\, when converting this kind of HTML to markdown\, only the outer paragra
 
 Inlines in Markdown are everything else\: plain text\, bold or italic formatting\, hyperlinks\, inline code spans\, etc\.
 
-#### List of Supported Block Tags
+#### 5\.1\.2\. List of Supported Block Tags
 What follows is a list of supported HTML tags that get translated to Markdown blocks\.
 
 * `<blockquote>…</blockquote>` \: Gets translated into Markdown blockquote\. Can contain other blocks\.
@@ -157,7 +157,7 @@ What follows is a list of supported HTML tags that get translated to Markdown bl
 
   List items can contain any kind of block\. Children of a list that are not `li` are ignored\.
 
-#### List of Supported Inline Tags
+#### 5\.1\.3\. List of Supported Inline Tags
 These HTML tags get translated to Markdown inlines\:
 
 * `<a href="…">…</a>` \: Gets converted to a Markdown link\. Can contain other inlines as children\. Optionally\, allows for a `title` attribute\.
@@ -174,7 +174,7 @@ These HTML tags get translated to Markdown inlines\:
 
 * `<img src="..." alt="..."/>` \: Gets translated into a Markdown image\.
 
-### Chapter Numbering
+### 5\.2\. Chapter Numbering
 The rendering process also prefixes chapter numbers before the titles\. The numbering strategy is passed into the process as an instance of the `ChapterNumbering` trait\.
 
 `ChapterNumbering` is an immutable chapter number counter\. It has a current state\, i\.e\. the next chapter number that is to be generated\. From that state\, one can go in three directions\:
@@ -197,7 +197,7 @@ Keep two things in mind\: 1\.\) Never use any single `ChapterNumbering` instance
 
 By default\, `ChapterNumbering.empty` is used\. This will leave chapter numbers empty\. A simple alternative is `ChapterNumbering.decimal` \.
 
-### Debug Markdown Tree Output
+### 5\.3\. Debug Markdown Tree Output
 If anything goes bad with regards to Markdown rendering\, you can always print a debug tree of the Markdown view\. For example\:
 
 ```scala
@@ -205,21 +205,17 @@ RenderAsMarkdown(ReadmeRoot, ChapterNumbering.empty) foreach {md ⇒ println(md.
 ```
 `RenderAsMarkdown` returns a sequence of Markdown elements\. On each of those elements\, `treeStructure()` is called\. This returns a string representation of this part of the Markdown tree\, with all children\.
 
-## Further Remarks
+## 6\. Further Remarks
 * This project\, which is also used as an example\, uses Maven as build tool\. But the same techniques as described here should also work with other tools\, such as SBT or Gradle\. No Maven plugins are necessary\, and all the procedures rely solely on standard JVM functionality\.
 
 * When using a tool similar to Maven\, the version of the `docs-generator` project can always remain a snapshot version\. It will never be released\.
 
 * The implementation goes only as far as required for the author of Jackadocs\. If you are missing any feature\, consider requesting it politely\, or implementing it yourself\. You can offer a merge request\.
 
-## Roadmap
+## 7\. Roadmap
 Here are some features that are considered or planned for future implementation\:
 
-* Table of contents
-
 * Links to other chapters
-
-* `ChapterNumbering` with support for different kinds of numberings on different levels
 
 * Migrate the whole Markdown to [Jackadull GFM](https\:\/\/github\.com\/jackadull\/gfm)
 

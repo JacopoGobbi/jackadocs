@@ -3,8 +3,8 @@ package net.jackadull.jackadocs.execution
 import java.nio.file.{FileSystems, Files, Path}
 
 import net.jackadull.jackadocs.execution.Jackadocs.{Generate, GenerateImpl}
+import net.jackadull.jackadocs.rendering.RenderAsMarkdown
 import net.jackadull.jackadocs.rendering.markdown.MDWrite
-import net.jackadull.jackadocs.rendering.{ChapterNumbering, RenderAsMarkdown}
 import net.jackadull.jackadocs.structure.RootChapter
 
 import scala.language.postfixOps
@@ -28,11 +28,11 @@ object Jackadocs {
   private def path(p:String):Path = (FileSystems getDefault) getPath p
 
   trait Generate {
-    def markdownFor(chapter:RootChapter, chapterNumbering:ChapterNumbering=ChapterNumbering.empty):Jackadocs
+    def markdownFor(chapter:RootChapter):Jackadocs
   }
   private final class GenerateImpl(target:Path, jackadocs:Jackadocs) extends Generate {
-    def markdownFor(chapter:RootChapter, chapterNumbering:ChapterNumbering):Jackadocs =
-      output(MDWrite(RenderAsMarkdown(chapter, chapterNumbering), _))
+    def markdownFor(chapter:RootChapter):Jackadocs =
+      output(MDWrite(RenderAsMarkdown(chapter), _))
 
     private def output(f:Appendable⇒Unit):Jackadocs = {
       val out = Files newBufferedWriter target
