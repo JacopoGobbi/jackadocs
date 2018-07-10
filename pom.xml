@@ -43,6 +43,10 @@
     <url>https://github.com/orgs/jackadull/projects/1</url>
   </issueManagement>
 
+  <properties>
+    <version.plugin.exec>1.6.0</version.plugin.exec>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.scala-lang.modules</groupId>
@@ -56,6 +60,29 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>templating-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>${version.plugin.exec}</version>
+        <executions>
+          <execution>
+            <id>re-generate-docs</id>
+            <configuration>
+              <arguments>
+                <argument>clean</argument>
+                <argument>compile</argument>
+                <argument>exec:java</argument>
+              </arguments>
+              <executable>mvn</executable>
+              <workingDirectory>docs-generator</workingDirectory>
+            </configuration>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <phase>install</phase>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
