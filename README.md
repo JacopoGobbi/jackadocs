@@ -1,21 +1,29 @@
 # Jackadocs
-[![Travis CI](https\:\/\/travis\-ci\.org\/jackadull\/jackadocs\.svg)](https\:\/\/travis\-ci\.org\/jackadull\/jackadocs) [![Maven Central](https\:\/\/img\.shields\.io\/maven\-central\/v\/net\.jackadull\/jackadocs\_2\.12\.svg)](https\:\/\/search\.maven\.org\/\#search\%7Cga\%7C1\%7Cg\%3A\%22net\.jackadull\%22\%20AND\%20a\%3A\%22jackadocs\_2\.12\%22) [![Coveralls](https\:\/\/coveralls\.io\/repos\/github\/jackadull\/jackadocs\/badge\.svg)](https\:\/\/coveralls\.io\/github\/jackadull\/jackadocs) [![Codefactor](https\:\/\/www\.codefactor\.io\/repository\/github\/jackadull\/jackadocs\/badge)](https\:\/\/www\.codefactor\.io\/repository\/github\/jackadull\/jackadocs) [![Snyk](https\:\/\/snyk\.io\/test\/github\/jackadull\/jackadocs\/badge\.svg)](https\:\/\/snyk\.io\/test\/github\/jackadull\/jackadocs)
+[![Travis CI](https\:\/\/travis\-ci\.org\/jackadull\/jackadocs\.svg)](https\:\/\/travis\-ci\.org\/jackadull\/jackadocs) [![Maven Central](https\:\/\/img\.shields\.io\/maven\-central\/v\/net\.jackadull\/jackadocs\_2\.12\.svg)](https\:\/\/search\.maven\.org\/\#search\%7Cga\%7C1\%7Cg\%3A\%22net\.jackadull\%22\%20AND\%20a\%3A\%22jackadocs\_2\.12\%22) [![Scaladoc](http\:\/\/javadoc\-badge\.appspot\.com\/net\.jackadull\/jackadocs\_2\.12\.svg\?label\=scaladoc)](http\:\/\/javadoc\-badge\.appspot\.com\/net\.jackadull\/jackadocs\_2\.12) [![Coveralls](https\:\/\/coveralls\.io\/repos\/github\/jackadull\/jackadocs\/badge\.svg)](https\:\/\/coveralls\.io\/github\/jackadull\/jackadocs) [![Codefactor](https\:\/\/www\.codefactor\.io\/repository\/github\/jackadull\/jackadocs\/badge)](https\:\/\/www\.codefactor\.io\/repository\/github\/jackadull\/jackadocs) [![Snyk](https\:\/\/snyk\.io\/test\/github\/jackadull\/jackadocs\/badge\.svg)](https\:\/\/snyk\.io\/test\/github\/jackadull\/jackadocs)
 
 * [1\. Motivation](\#1\-motivation)
 * [2\. Intended Use \/ Basic Idea](\#2\-intended\-use\-\-basic\-idea)
 * [3\. Usage Example](\#3\-usage\-example)
   * [3\.1\. How to Re\-Generate this Documentation](\#31\-how\-to\-re\-generate\-this\-documentation)
+    * [3\.1\.1\. Automation in the Main Project](\#311\-automation\-in\-the\-main\-project)
   * [3\.2\. The Main Class](\#32\-the\-main\-class)
 * [4\. Chapter Structure](\#4\-chapter\-structure)
-* [5\. Rendering Process](\#5\-rendering\-process)
-  * [5\.1\. HTML to Markdown Conversion](\#51\-html\-to\-markdown\-conversion)
-    * [5\.1\.1\. Markdown Basics\: Inlines and Blocks](\#511\-markdown\-basics\-inlines\-and\-blocks)
-    * [5\.1\.2\. List of Supported Block Tags](\#512\-list\-of\-supported\-block\-tags)
-    * [5\.1\.3\. List of Supported Inline Tags](\#513\-list\-of\-supported\-inline\-tags)
-  * [5\.2\. Chapter Numbering](\#52\-chapter\-numbering)
-  * [5\.3\. Debug Markdown Tree Output](\#53\-debug\-markdown\-tree\-output)
-* [6\. Further Remarks](\#6\-further\-remarks)
-* [7\. Roadmap](\#7\-roadmap)
+  * [4\.1\. TOC Options](\#41\-toc\-options)
+  * [4\.2\. GitHub Readme Badges](\#42\-github\-readme\-badges)
+* [5\. Maven Utilization](\#5\-maven\-utilization)
+* [6\. Rendering Process](\#6\-rendering\-process)
+  * [6\.1\. HTML to Markdown Conversion](\#61\-html\-to\-markdown\-conversion)
+    * [6\.1\.1\. Markdown Basics\: Inlines and Blocks](\#611\-markdown\-basics\-inlines\-and\-blocks)
+    * [6\.1\.2\. List of Supported Block Tags](\#612\-list\-of\-supported\-block\-tags)
+    * [6\.1\.3\. List of Supported Inline Tags](\#613\-list\-of\-supported\-inline\-tags)
+  * [6\.2\. Chapter Numbering](\#62\-chapter\-numbering)
+    * [6\.2\.1\. ChapterNumbering Sequencing](\#621\-chapternumbering\-sequencing)
+  * [6\.3\. Debug Markdown Tree Output](\#63\-debug\-markdown\-tree\-output)
+* [7\. Programming Considerations](\#7\-programming\-considerations)
+  * [7\.1\. Implicit String to NodeSeq Conversion](\#71\-implicit\-string\-to\-nodeseq\-conversion)
+  * [7\.2\. Chapter Type Naming](\#72\-chapter\-type\-naming)
+  * [7\.3\. Further Remarks](\#73\-further\-remarks)
+* [8\. Jackadull Recipe](\#8\-jackadull\-recipe)
 
 Tool library for automated generation of tool documentation\. Can be used for creating `README.md` files\, but also for documentation books\, with multiple files\, in either HTML or [Github\-Flavored Markdown](https\:\/\/github\.github\.com\/gfm\/) \.
 
@@ -37,7 +45,11 @@ Examples for meaningful usecases of Jackadocs include\:
 ## 2\. Intended Use \/ Basic Idea
 There is no special magic in using Jackadocs\. The general approach is to create a class with a `main` method\, which overwrites all the documentation when called\. Jackadocs is just a library that gives some support with generating the documentation programmatically\.
 
-Text fragments that will be composed into the documentation files are XML constants in the Scala code\. This XML is interpreted as HTML\. When writing documentation in Markdown format\, HTML will be converted to Markdown\. \(However\, the conversion process is not very smart\; don\'t expect miracles from it\. It will do just enough to translate simple documentation\, such as `README.md` files\.\)
+This documentation also shows some more ideas that are common amongst Jackadull projects\. They include a certain use of Maven for including the generation of documentation in the build cycle\.
+
+Every developer can make up their own best practices\. This document can be seen as a source of inspiration\.
+
+Source fragments that will be composed into documentation files are XML constants in the Scala code\. This XML is interpreted as HTML\. When writing documentation in Markdown format\, HTML will be converted to Markdown\. \(However\, the conversion process is not very smart\; don\'t expect miracles from it\. It will do just enough to translate simple documentation\, such as `README.md` files\.\)
 
 [Here](https\:\/\/github\.com\/jackadull\/jackadocs\/blob\/master\/docs\-generator\/src\/main\/scala\/net\/jackadull\/jackadocs\/docs\/readme\/IntentedUse\.scala) is an example for the Scala source file from which this text is generated\.
 
@@ -45,7 +57,7 @@ In order to isolate documentation\-generating code from the actual module that i
 
 The recommended name for this module is `docs-generator` \. An example can be found in the [`docs-generator`](https\:\/\/github\.com\/jackadull\/jackadocs\/tree\/master\/docs\-generator) subfolder of the `jackadocs` project itself\.
 
-Then\, every time before making a new release of the main module\, the `main` method of the `docs-generator` is to be called\. Documentation will be re\-generated\. By adhering to this general workflow\, documentation will always be up\-to date\.
+Then\, every time before making a new release of the main module\, the `main` method of the `docs-generator` is to be called\. Documentation will be re\-generated\. By adhering to this general workflow\, documentation will always be up\-to date\. This part can be automated using Maven\, as shown below\.
 
 This is the basic idea\. As written initially\, there is no further magic behind Jackadocs\. The following chapters will share some further advice on how to handle certain things\.
 
@@ -66,37 +78,64 @@ mvn clean compile exec:java
 ```
 Maven will then clean up the target folder\, compile the project\, and run the main class\. The details of this execution are defined in `docs-generator/pom.xml` \, in the configuration of the `exec-maven-plugin` \: As can bee seen there\, the main class \(i\.e\.\, the class that contains the `main` method\) is `net.jackadull.jackadocs.docs.Main` \. Also\, the first \(and only\) command\-line argument for the execution is configured as `${project.basedir}` \. This means that the path to the `docs-generator` project folder will be passed to the `main` method\.
 
+#### 3\.1\.1\. Automation in the Main Project
+The process of re\-generating the documentation has been automated\: When calling `mvn install` on the main module\, the Maven Exec plugin is used to call `mvn clean compile exec:java` inside the `docs-generator` folder\. You can see an example of this utility in [the main POM file of Jackadocs](https\:\/\/github\.com\/jackadull\/jackadocs\/blob\/release\/latest\/pom\.xml) \. \(Look for `exec-maven-plugin` \, and the configured execution `re-generate-docs` \.\)
+
+The main POM also contains another option\: When the Maven profile `jackadull-release` is active\, then the option `-V` is added to the command\-line parameters of the `docs-generator` run\. This does not re\-generate the documentaton\, but just verifies that the current version has all the latest information\. More on that further below\.
+
 ### 3\.2\. The Main Class
-The source code of the main class can be found [here](https\:\/\/github\.com\/jackadull\/jackadocs\/blob\/kickoff\/docs\-generator\/src\/main\/scala\/net\/jackadull\/jackadocs\/docs\/Main\.scala) \. The main class does very few things\:
+The source code of the main class can be found [here](https\:\/\/github\.com\/jackadull\/jackadocs\/blob\/kickoff\/docs\-generator\/src\/main\/scala\/net\/jackadull\/jackadocs\/docs\/Main\.scala) \. As can be seen\, it inherits from `JackadocsMain` and `App` \. `JackadocsMain` is really not a requirement\; it can be extended optionally for some utility value\. Its source code is quite short\, so you may want to look it up\.
 
-* Create the main `Jackadocs` instance\:
+Here is what it does\:
 
-  ```scala
-  val jackadocs = Jackadocs fromArgs args
-  ```
-  The command\-line arguments are passed to the factory method\. This way\, the `Jackadocs` instance knows the project root folder\.
+* It creates a `Jackadocs` instance\, stored in the variable `jackadocs` \. This class contains the main functions used for generating the documentation\, and some other things\.
 
-* Check if dependency for the main project has the right version\:
+  The `Jackadocs` factory method receives the command\-line arguments\. The most important \(and required\) argument is the path to the `docs-generator` folder\.
 
-  ```scala
-  jackadocs.requirePOMVersion("../pom.xml")(JackadocsInfo Version)
-  ```
-  Asserts that the nominal version of the parent library dependency is actually the same as the version declared in the `pom.xml` of the parent folder\. Every time the version of the main Jackadocs `pom.xml` is changed\, the dependency version in `docs-generator/pom.xml` must also be changed\. This line of code will ensure that this has happened\.
+  The other optional argument is `-V` \. When specified\, files will not be overwritten\, but their contents will only be verified\. When `-V` is specified and one of the documentation files is not exactly as it _would_ be written\, the program fails\.
 
-  `requirePOMVersion` reads the `pom.xml` at the given relative path\. \(That is\, relative to the `docs-generator` project folder\.\) It then uses a simple XML lookup to find the declared project version\. This must be a constant\, which is also encouraged by Maven\. After it found the POM\'s project version\, it compares the string with the second given argument\. If they do not match\, an exception is thrown\.
+* It validates that the dependency to the main project has the expected version\. `JackadocsMain` reads the POM file of the main project and extracts the artifact version\. It then compares this version with the version included in the `docs-generator` project\. Should the two not match\, the program exits with an error\.
 
-  In this case\, the version number to compare against is given as `JackadocsInfo.Version` \. This is possible because the parent project is configured in such a way that Maven will generate a static class called `JackadocsInfo` \, which contains the Maven module version as the constant named `Version` \.
+  This can happen quite frequently\, when updating the version of the main POM\, but forgetting to update it in `docs-generator` as well\.
 
-  If you are interested in copying this behaviour\, take a look at the Jackadocs main `pom.xml` \. The `templating-maven-plugin` does the job of creating said static class\. The template can be found under `src/main/scala-templates` \.
+The `Main` object of Jackadocs\' `docs-generator` also does the following\:
 
 * Generate the `README.md` file\:
 
   ```scala
-  jackadocs generateAt "../README.md" markdownFor ReadmeRoot
+  jackadocs generateAt s"$projectDir/README.md" markdownFor ReadmeRoot
   ```
-  Tells Jackadocs to generate the Markdown for `ReadmeRoot` and write it into `"../README.md"` \, relative to the project base directory that was passed in as a command\-line argument\.
+  Tells Jackadocs to generate the Markdown for `ReadmeRoot` and write it into `README.md` \, relative to the project base directory that was passed in as a command\-line argument\.
 
-  `ReadmeRoot` can be found [here](https\:\/\/github\.com\/jackadull\/jackadocs\/blob\/master\/docs\-generator\/src\/main\/scala\/net\/jackadull\/jackadocs\/docs\/ReadmeRoot\.scala) \. The contents of this object follow the chapter structure\, which gets described next\.
+  `ReadmeRoot` can be found [here](https\:\/\/github\.com\/jackadull\/jackadocs\/blob\/master\/docs\-generator\/src\/main\/scala\/net\/jackadull\/jackadocs\/docs\/ReadmeRoot\.scala) \. The contents of this object follow the chapter structure\, which gets described below\.
+
+* Define the minimum set of methods required by `JackadocsMain` \:
+
+  * ```scala
+    def organizationName = "jackadull"
+    ```
+    This is the name of the organization\, as it usually appears in URLs of services like GitHub\, Travis\-CI etc\.
+
+  * ```scala
+    def projectDir = ".."
+    ```
+    The path to the main project\, relative to `docs-generator` \.
+
+  * ```scala
+    def projectInfo = new JackadocsInfo with JackadocsProjectInfo
+    ```
+    Makes the Maven artifact data \(group\/artifact ID and version\) accessible to `JackadocsMain` \. This is used for a couple of features\.
+
+    Jackadocs requires the artifact data in form of an instance of `JackadocsProjectInfo` \. Since the main project usually does not have a Maven dependency on Jackadocs\, that type is not available from inside the main project\. Therefore\, Jackadull projects usually define a trait named _\[Project name\]_ `Info` that defines the methods `artifactID` \, `groupID` and `version` \. Those are filled in by Maven during the compilation phase\. This is for giving the runtime information about the actual dependency used\.
+
+    The construct of `new JackadocsInfo with JackadocsProjectInfo` creates a new instance that satisifies the `JackadocsProjectInfo` trait\.
+
+  * ```scala
+    def sourceRepoProvider = "github"
+    ```
+    Used for GitHub readme badges that require the source repo provider as part of the URL\.
+
+When you take a look at [`JackadocsMain`](https\:\/\/github\.com\/jackadull\/jackadocs\/blob\/release\/latest\/src\/main\/scala\/net\/jackadull\/jackadocs\/execution\/JackadocsMain\.scala) and its super type [`DocsMetaData`](https\:\/\/github\.com\/jackadull\/jackadocs\/blob\/release\/latest\/src\/main\/scala\/net\/jackadull\/jackadocs\/structure\/DocsMetaData\.scala) \, you will find many more properties with reasonable default implementations that can be overridden when necessary\.
 
 ## 4\. Chapter Structure
 The contents of every Jackadocs\-based document are laid out in a hierarchy of chapters and sub\-chapters\. Chapters are Scala objects\. There are two major ways how to declare chapters in the code\:
@@ -105,25 +144,72 @@ The contents of every Jackadocs\-based document are laid out in a hierarchy of c
 
 2. As inline constants\, similar to case class instances\, within the code\. [The`UsageExample`object](https\:\/\/github\.com\/jackadull\/jackadocs\/blob\/master\/docs\-generator\/src\/main\/scala\/net\/jackadull\/jackadocs\/docs\/readme\/UsageExample\.scala) contains several examples\, which can be found when looking at its `subChapters` method\.
 
-The root\-level object for every Jackadocs\-based documents is an instance of `Chapter` \. The title of the root chapter is the title of the document\. Its contents are the top\-level text of the document\. The sub\-chapters of the root\-level chapter are the chapters of the document\.
+The root\-level object for every Jackadocs\-based documents is an instance of [`RootChapter`](https\:\/\/github\.com\/jackadull\/jackadocs\/blob\/release\/latest\/src\/main\/scala\/net\/jackadull\/jackadocs\/structure\/RootChapter\.scala) \. The title of the root chapter is the title of the document\. Its contents are the top\-level text of the document\. The sub\-chapters of the root\-level chapter are the chapters of the document\.
 
-Of course\, the structure is recursive\. Sub\-chapters can have sub\-chapters of their own\, and so on\. In this way\, a tree\-like chapter structure gets assembled\.
+Of course\, the structure is recursive\. Chapters below `RootChapter` are instances of `Chapter` \, which can have sub\-chapters of their own\, and so on\. In this way\, a tree\-like chapter structure gets assembled\.
 
 Looking at [the source code of`ReadmeRoot`](https\:\/\/github\.com\/jackadull\/jackadocs\/blob\/master\/docs\-generator\/src\/main\/scala\/net\/jackadull\/jackadocs\/docs\/ReadmeRoot\.scala) can be a helpful illustration of these abstract descriptions\.
 
-## 5\. Rendering Process
-As explained before\, the command `jackadocs generateAt "../README.md" markdownFor ReadmeRoot` renders the Markdown version of the root chapter into the given file\.
+### 4\.1\. TOC Options
+Here are some optional features of `Chapter` instances\:
+
+* Table of Contents\: For adding one\, simply define\:
+
+  ```scala
+  override def toc = true
+  ```
+  Adds a table of contents with links to sub\-chapters between the chapter title heading and its contents\.
+
+* Contents before TOC\: Optional contents to be placed before the table of contents\. Used in this documentation for placing the GitHub readme badges before the main TOC\.
+
+### 4\.2\. GitHub Readme Badges
+An example can be seen at the top of this very document\. Those badges do not really have anything to do with GitHub itself\. It\'s only that they became popular on GitHub projects\.
+
+Badges can supply more up\-to\-date information on a project\, such as the latest build status\, coverage etc\. They are usually simple images with links\. Some standard kinds of badges are defined in Jackadocs\. See an example by looking into `ReadmeRoot:`
+
+```scala
+override def contentsBeforeTOC(root:RootChapter):NodeSeq =
+<p>{travisCIBadge} {mavenCentralBadge} {coverallsBadge} {codeFactorBadge} {snykBadge}</p>
+```
+This is enabled by adding the `BadgeGenerators` trait\, which requires only one further method to be defined\:
+
+```scala
+def docsMetaData:DocsMetaData = Main
+```
+Assigning the `Main` object is possible in this case because `Main` extends `JackadocsMain` \, which in turn extends `DocsMetaData` \. This is where all the badges get their URL components from\, and you are free to override all available properties if needed\, or leave them at their \(usually reasonable\) defaults\.
+
+## 5\. Maven Utilization
+Maven utilization for Jackadocs has been added to\:
+
+* The [POM of the main project](https\:\/\/github\.com\/jackadull\/jackadocs\/blob\/release\/latest\/pom\.xml)
+
+* The [POM of indepdendent project in the`docs-generator`folder](https\:\/\/github\.com\/jackadull\/jackadocs\/blob\/release\/latest\/docs\-generator\/pom\.xml)
+
+The utilization involves usage of the `exec-maven-plugin` \.
+
+In the `docs-generator` project\, the plugin is used for the `exec:java` goal\, for calling the `Main` class\. This re\-generates the project documentation\.
+
+A variant of this happens when the `jackadull-release` profile is active\: In that case\, documentation will not be overwritten\. Instead\, the program validates that all of the documentation files are at the latest state\. If not\, the program terminates with an error\. This is to prevent that new releases are being produced with an outdated version of the documentation\.
+
+In the main project\, the plugin is used for the `exec:exec` goal\, which executes a Maven child process in the `docs-generator` folder\, re\-generating documentation\. It will be executed automatically after the `install` phase\. This is because after main project version updates\, the main project must first be installed locally\, so it can be pulled as a depdendency in `docs-generator` \.
+
+The main project will pass on the `jackadull-release` profile to `docs-generator` if active\.
+
+All of this can be studied by the example of the Jackadull project\.
+
+## 6\. Rendering Process
+As explained before\, the command `jackadocs generateAt "$projectDir/README.md" markdownFor ReadmeRoot` renders the Markdown version of the root chapter into the given file\.
 
 The source format of the data is always HTML\, as can be seen when looking at the Scala sources that generate this document\. In this case however\, the output format is Markdown\. This obviously means that some form of conversion from HTML to Markdown is going on as part of the rendering process\.
 
-### 5\.1\. HTML to Markdown Conversion
+### 6\.1\. HTML to Markdown Conversion
 When converting from source HTML to Markdown\, a very pragmatic process is used\. It recognizes specific patterns of HTML code and converts those into specific patterns of Markdown code\. Everything that does not match those expected patterns gets ignored \(or converted to plain text\) and will therefore probably yield an unwanted result\.
 
 That is to say\, the HTML\-to\-Markdown conversion is far from trying to be smart\. But if you follow certain simple rules when assembling the HTML\, you will get the desired result\.
 
 \(Note\: When speaking of Markdown within the scope of this document\, this specifically refers to Github\-Flavored Markdown\. [Here is a link](https\:\/\/github\.github\.com\/gfm\/) to the specification\.\)
 
-#### 5\.1\.1\. Markdown Basics\: Inlines and Blocks
+#### 6\.1\.1\. Markdown Basics\: Inlines and Blocks
 When composing HTML that translates well to Markdown\, keep in mind one foundation of Github\-Flavored Markdown\: Every Markdown element is either a block or an inline\. The concept is very similar to HTML\/CSS block and inline rendering\.
 
 Blocks are top\-level constructs\. They can not be nested arbitrarily\.
@@ -136,7 +222,7 @@ However\, when converting this kind of HTML to markdown\, only the outer paragra
 
 Inlines in Markdown are everything else\: plain text\, bold or italic formatting\, hyperlinks\, inline code spans\, etc\.
 
-#### 5\.1\.2\. List of Supported Block Tags
+#### 6\.1\.2\. List of Supported Block Tags
 What follows is a list of supported HTML tags that get translated to Markdown blocks\.
 
 * `<blockquote>…</blockquote>` \: Gets translated into Markdown blockquote\. Can contain other blocks\.
@@ -157,7 +243,7 @@ What follows is a list of supported HTML tags that get translated to Markdown bl
 
   List items can contain any kind of block\. Children of a list that are not `li` are ignored\.
 
-#### 5\.1\.3\. List of Supported Inline Tags
+#### 6\.1\.3\. List of Supported Inline Tags
 These HTML tags get translated to Markdown inlines\:
 
 * `<a href="…">…</a>` \: Gets converted to a Markdown link\. Can contain other inlines as children\. Optionally\, allows for a `title` attribute\.
@@ -174,8 +260,8 @@ These HTML tags get translated to Markdown inlines\:
 
 * `<img src="..." alt="..."/>` \: Gets translated into a Markdown image\.
 
-### 5\.2\. Chapter Numbering
-The rendering process also prefixes chapter numbers before the titles\. The numbering strategy is passed into the process as an instance of the `ChapterNumbering` trait\.
+### 6\.2\. Chapter Numbering
+The rendering process also prefixes chapter numbers before the titles\. The numbering strategy is passed into the process as an instance of the `ChapterNumbering` trait\, defined in the `RootChapter` \.
 
 `ChapterNumbering` is an immutable chapter number counter\. It has a current state\, i\.e\. the next chapter number that is to be generated\. From that state\, one can go in three directions\:
 
@@ -197,7 +283,24 @@ Keep two things in mind\: 1\.\) Never use any single `ChapterNumbering` instance
 
 By default\, `ChapterNumbering.empty` is used\. This will leave chapter numbers empty\. A simple alternative is `ChapterNumbering.decimal` \.
 
-### 5\.3\. Debug Markdown Tree Output
+#### 6\.2\.1\. ChapterNumbering Sequencing
+`ChapterNumbering` instances can be combined with each other\, so that different levels of chapter nesting are numbered differently\. For example\, the `RootChapter` of this documentation is defined as\:
+
+```scala
+override def chapterNumbering = ChapterNumbering(ChapterNumbering empty, ChapterNumbering decimal)
+```
+This defines that top\-level chapters will not be numbered \( `empty` \)\, while the level below that is numbered decimally \( `decimal` \)\. As there is only one top\-level chapter\, and it serves as title of the whole document\, it is isually advisable to use `empty` as top\-level numbering\.
+
+The last defined chapter numbering level in the list gets repeated for every following level\. In this case\, all further nesting levels will be `decimal` \. As an example\, if only two levels of chapters should be numbered\, and everything at chapter level 3 and below should have no numbering\, this would look like this\:
+
+```scala
+ChapterNumbering(ChapterNumbering empty, ChapterNumbering decimal, ChapterNumbering decimal, ChapterNumbering empty)
+```
+Other types and conditions for chapter numbering are also possible\. For example\, appendices are usually numbered alphabetically\.
+
+However\, neither the special case for appendices not alphabetic numbering are implemented in Jackadocs\. It would be easy to do though\. Alphabetic numbering can be done as a variant of the `decimal` implementation\. Special cases for appendices can be handled because the `ChapterNumbering` instance gets passed the chapter that is to be numbered\. So\, special chapter\-dependendent numbering cases can be implemented easily\.
+
+### 6\.3\. Debug Markdown Tree Output
 If anything goes bad with regards to Markdown rendering\, you can always print a debug tree of the Markdown view\. For example\:
 
 ```scala
@@ -205,17 +308,59 @@ RenderAsMarkdown(ReadmeRoot, ChapterNumbering.empty) foreach {md ⇒ println(md.
 ```
 `RenderAsMarkdown` returns a sequence of Markdown elements\. On each of those elements\, `treeStructure()` is called\. This returns a string representation of this part of the Markdown tree\, with all children\.
 
-## 6\. Further Remarks
+## 7\. Programming Considerations
+### 7\.1\. Implicit String to NodeSeq Conversion
+The `Chapter` trait contains an implicit conversion from `String` to `NodeSeq` \. It is automatically in scope for all `Chapter` sub\-types\.
+
+This is especially useful for chapter titles\. They are of type `NodeSeq` \, but it is usually more comfortable to enter a simple string for the title\.
+
+### 7\.2\. Chapter Type Naming
+When defining `Chapter` instances as Scala `object` types\, the developer is free to choose a proper name\. Everyone should make up their own conventions here\, as suitable for the project at hand\.
+
+In this documentation\, the developer found it useful to name the chapter objects like the chapter titles\, only in camel case\. Additionally\, the chapter number is prepended with a prefix\, for example `Ch3_ExampleChapter` \. This helps working with the code\, as the IDE will automatically display chapters in proper order\.
+
+### 7\.3\. Further Remarks
 * This project\, which is also used as an example\, uses Maven as build tool\. But the same techniques as described here should also work with other tools\, such as SBT or Gradle\. No Maven plugins are necessary\, and all the procedures rely solely on standard JVM functionality\.
 
 * When using a tool similar to Maven\, the version of the `docs-generator` project can always remain a snapshot version\. It will never be released\.
 
 * The implementation goes only as far as required for the author of Jackadocs\. If you are missing any feature\, consider requesting it politely\, or implementing it yourself\. You can offer a merge request\.
 
-## 7\. Roadmap
-Here are some features that are considered or planned for future implementation\:
+## 8\. Jackadull Recipe
+All elements required for running Jackadocs as part of a project have been described in the previous chapters\. For tying things up\, here is a little list of bullet points that describe the common practice when used in Jackadull projects\. If you wish\, you can use it as a checklist or an inspiration for your own project\.
 
-* Links to other chapters
+* In the `docs-generator` sub\-folder\:
 
-* Migrate the whole Markdown to [Jackadull GFM](https\:\/\/github\.com\/jackadull\/gfm)
+  * Main class that extends `App` and `JackadocsMain`
+
+  * `ReadmeRoot` as entry point for rendering\, extending `RootChapter`
+
+  * Main class rendering the readme file\:
+
+    ```scala
+    jackadocs generateAt s"$projectDir/README.md" markdownFor ReadmeRoot
+    ```
+  * `docs-generator` POM\:
+
+    * Version number obviously not made for releasing\, such as `0-SNAPSHOT`
+
+    * Dependency on main project and Jackadocs
+
+    * Configuration of `exec-maven-plugin` for calling the main class
+
+    * When `jackadull-release` profile is active\, also pass `-V` to the main class
+
+* In the main project\:
+
+  * A template for the project runtime information type\, under `src/main/scala-templates` \, following [this example](https\:\/\/github\.com\/jackadull\/jackadocs\/blob\/release\/latest\/src\/main\/scala\-templates\/net\/jackadull\/jackadocs\/JackadocsInfo\.scala)
+
+  * In the main project POM\:
+
+    * Inclusion of `templating-maven-plugin` \, following the Jackadocs example
+
+    * Usage of `exec-maven-plugin` for calling `mvn clean compile exec:java` in the `docs-generator` sub\-folder after the `install` phase of the main project
+
+    * When the `jackadull-release` profile is active\, pass it on to `docs-generator` via `exec-maven-plugin`
+
+When all of this is in place\, simply call `mvn install` in the main project folder for \(re\-\)generating the documentation\.
 

@@ -40,6 +40,13 @@ object BadgeGenerator {
     def name:String = "Maven Central"
   }
 
+  class ScaladocBadgeGenerator(val data:DocsMetaData) extends BadgeGenerator {
+    import data._
+    def imageURL:String = s"http://javadoc-badge.appspot.com/$mavenGroupID/$mavenArtifactID.svg?label=scaladoc"
+    def linkURL:Option[String] = Some(s"http://javadoc-badge.appspot.com/$mavenGroupID/$mavenArtifactID")
+    def name:String = "Scaladoc"
+  }
+
   class SnykBadgeGenerator(val data:DocsMetaData) extends BadgeGenerator {
     import data._
     def imageURL:String = s"https://snyk.io/test/$snykRepoProvider/$snykOrgName/$snykRepoName/badge.svg"

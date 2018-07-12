@@ -5,12 +5,12 @@ import net.jackadull.jackadocs.structure.{Chapter, RootChapter}
 import scala.language.postfixOps
 import scala.xml.NodeSeq
 
-object RenderingProcess extends Chapter {
+object Ch6_RenderingProcess extends Chapter {
   def title = "Rendering Process"
 
   def contents(root:RootChapter):NodeSeq =
 <p>
-  As explained before, the command <tt>jackadocs generateAt "../README.md" markdownFor ReadmeRoot</tt> renders the Markdown version of the root chapter into the given file.
+  As explained before, the command <tt>jackadocs generateAt "$projectDir/README.md" markdownFor ReadmeRoot</tt> renders the Markdown version of the root chapter into the given file.
 </p>
 <p>
   The source format of the data is always HTML, as can be seen when looking at the Scala sources that generate this document.
@@ -178,7 +178,7 @@ object RenderingProcess extends Chapter {
     Chapter("Chapter Numbering",
 <p>
   The rendering process also prefixes chapter numbers before the titles.
-  The numbering strategy is passed into the process as an instance of the <tt>ChapterNumbering</tt> trait.
+  The numbering strategy is passed into the process as an instance of the <tt>ChapterNumbering</tt> trait, defined in the <tt>RootChapter</tt>.
 </p>
 <p>
   <tt>ChapterNumbering</tt> is an immutable chapter number counter.
@@ -232,7 +232,40 @@ object RenderingProcess extends Chapter {
   By default, <tt>ChapterNumbering.empty</tt> is used.
   This will leave chapter numbers empty.
   A simple alternative is <tt>ChapterNumbering.decimal</tt>.
+</p>, subChapters = Seq(
+        Chapter("ChapterNumbering Sequencing",
+<p>
+  <tt>ChapterNumbering</tt> instances can be combined with each other, so that different levels of chapter nesting are numbered differently.
+  For example, the <tt>RootChapter</tt> of this documentation is defined as:
 </p>
+<pre><code class="language-scala">
+override def chapterNumbering = ChapterNumbering(ChapterNumbering empty, ChapterNumbering decimal)
+</code></pre>
+<p>
+  This defines that top-level chapters will not be numbered (<tt>empty</tt>), while the level below that is numbered decimally (<tt>decimal</tt>).
+  As there is only one top-level chapter, and it serves as title of the whole document, it is isually advisable to use <tt>empty</tt> as top-level numbering.
+</p>
+<p>
+  The last defined chapter numbering level in the list gets repeated for every following level.
+  In this case, all further nesting levels will be <tt>decimal</tt>.
+  As an example, if only two levels of chapters should be numbered, and everything at chapter level 3 and below should have no numbering, this would look like this:
+</p>
+<pre><code class="language-scala">
+ChapterNumbering(ChapterNumbering empty, ChapterNumbering decimal, ChapterNumbering decimal, ChapterNumbering empty)
+</code></pre>
+<p>
+  Other types and conditions for chapter numbering are also possible.
+  For example, appendices are usually numbered alphabetically.
+</p>
+<p>
+  However, neither the special case for appendices not alphabetic numbering are implemented in Jackadocs.
+  It would be easy to do though.
+  Alphabetic numbering can be done as a variant of the <tt>decimal</tt> implementation.
+  Special cases for appendices can be handled because the <tt>ChapterNumbering</tt> instance gets passed the chapter that is to be numbered.
+  So, special chapter-dependendent numbering cases can be implemented easily.
+</p>
+        )
+      )
     ),
     Chapter("Debug Markdown Tree Output",
 <p>

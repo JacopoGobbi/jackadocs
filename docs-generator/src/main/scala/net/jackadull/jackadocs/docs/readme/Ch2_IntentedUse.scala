@@ -4,7 +4,7 @@ import net.jackadull.jackadocs.structure.{Chapter, RootChapter}
 
 import scala.xml.NodeSeq
 
-object IntentedUse extends Chapter {
+object Ch2_IntentedUse extends Chapter {
   def title = "Intended Use / Basic Idea"
 
   def contents(root:RootChapter):NodeSeq =
@@ -14,7 +14,15 @@ object IntentedUse extends Chapter {
   Jackadocs is just a library that gives some support with generating the documentation programmatically.
 </p>
 <p>
-  Text fragments that will be composed into the documentation files are XML constants in the Scala code.
+  This documentation also shows some more ideas that are common amongst Jackadull projects.
+  They include a certain use of Maven for including the generation of documentation in the build cycle.
+</p>
+<p>
+  Every developer can make up their own best practices.
+  This document can be seen as a source of inspiration.
+</p>
+<p>
+  Source fragments that will be composed into documentation files are XML constants in the Scala code.
   This XML is interpreted as HTML.
   When writing documentation in Markdown format, HTML will be converted to Markdown.
   (However, the conversion process is not very smart; don't expect miracles from it.
@@ -37,6 +45,7 @@ object IntentedUse extends Chapter {
   Then, every time before making a new release of the main module, the <tt>main</tt> method of the <tt>docs-generator</tt> is to be called.
   Documentation will be re-generated.
   By adhering to this general workflow, documentation will always be up-to date.
+  This part can be automated using Maven, as shown below.
 </p>
 <p>
   This is the basic idea.

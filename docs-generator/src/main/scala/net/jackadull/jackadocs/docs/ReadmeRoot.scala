@@ -14,7 +14,7 @@ object ReadmeRoot extends RootChapter with BadgeGenerators {
   override def chapterNumbering = ChapterNumbering(ChapterNumbering empty, ChapterNumbering decimal)
 
   override def contentsBeforeTOC(root:RootChapter):NodeSeq =
-<p>{travisCIBadge} {mavenCentralBadge} {coverallsBadge} {codeFactorBadge} {snykBadge}</p>
+<p>{travisCIBadge} {mavenCentralBadge} {scaladocBadge} {coverallsBadge} {codeFactorBadge} {snykBadge}</p>
 
   override def toc = true
 
@@ -24,8 +24,8 @@ object ReadmeRoot extends RootChapter with BadgeGenerators {
   Can be used for creating <tt>README.md</tt> files, but also for documentation books, with multiple files, in either HTML or <a href="https://github.github.com/gfm/">Github-Flavored Markdown</a>.
 </p>
 
-  override def subChapters:Seq[Chapter] = Seq(Motivation, IntentedUse, UsageExample, ChapterStructure,
-    RenderingProcess, FurtherRemarks, Roadmap)
+  override def subChapters:Seq[Chapter] = Seq(Ch1_Motivation, Ch2_IntentedUse, Ch3_UsageExample, Ch4_ChapterStructure,
+    Ch5_MavenUtilization, Ch6_RenderingProcess, Ch7_ProgrammingConsiderations, Ch8_JackadullRecipe)
 
   def docsMetaData:DocsMetaData = Main
 }
