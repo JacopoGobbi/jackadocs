@@ -9,11 +9,7 @@ trait JackadocsMain extends DocsMetaData {
   def projectInfo:JackadocsProjectInfo
 
   protected def args:Array[String]
-  lazy val jackadocs:Jackadocs = {
-    val jd = Jackadocs fromArgs args
-    jd.requirePOMVersion(s"$projectDir/pom.xml")(projectInfo version)
-    jd
-  }
+  lazy val jackadocs:Jackadocs = Jackadocs fromArgs args
 
   def mavenArtifactID:String = projectInfo artifactID
   def mavenGroupID:String = projectInfo groupID

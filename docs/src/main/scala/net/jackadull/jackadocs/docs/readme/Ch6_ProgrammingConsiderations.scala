@@ -4,7 +4,7 @@ import net.jackadull.jackadocs.structure.{Chapter, RootChapter}
 
 import scala.xml.NodeSeq
 
-object Ch7_ProgrammingConsiderations extends Chapter {
+object Ch6_ProgrammingConsiderations extends Chapter {
   def title = "Programming Considerations"
 
   def contents(root:RootChapter):NodeSeq = NodeSeq.Empty
@@ -35,14 +35,14 @@ object Ch7_ProgrammingConsiderations extends Chapter {
 <ul>
   <li>
     <p>
-      This project, which is also used as an example, uses Maven as build tool.
-      But the same techniques as described here should also work with other tools, such as SBT or Gradle.
-      No Maven plugins are necessary, and all the procedures rely solely on standard JVM functionality.
+      This project, which is also used as an example, uses SBT as build tool.
+      But the same techniques as described here should also work with other tools, such as Maven or Gradle.
+      No SBT plugins are strictly necessary, and all the procedures rely solely on standard JVM functionality.
     </p>
   </li>
   <li>
     <p>
-      When using a tool similar to Maven, the version of the <tt>docs-generator</tt> project can always remain a snapshot version.
+      When using a tool similar to SBT or Maven, the version of the <tt>docs</tt> project can always remain a snapshot version.
       It will never be released.
     </p>
   </li>

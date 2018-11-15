@@ -19,7 +19,8 @@ object Ch1_Motivation extends Chapter {
   Examples for meaningful usecases of Jackadocs include:
 </p>
 <ul>
-  <li>Using the Maven resources plugin in order to include Maven properties in the documentation, such as library versions.</li>
+  <li>Calling code from the main SBT project in order to document the actual outcome of statements.</li>
+  <li>Using the Maven resources plugin or SBT in order to include Maven properties in the documentation, such as library versions.</li>
   <li>Reusing certain documentation templates across several projects.</li>
   <li>Using loops for generating parts of the documentation.</li>
   <li>

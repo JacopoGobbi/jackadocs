@@ -5,12 +5,12 @@ import net.jackadull.jackadocs.structure.{Chapter, RootChapter}
 import scala.language.postfixOps
 import scala.xml.NodeSeq
 
-object Ch6_RenderingProcess extends Chapter {
+object Ch5_RenderingProcess extends Chapter {
   def title = "Rendering Process"
 
   def contents(root:RootChapter):NodeSeq =
 <p>
-  As explained before, the command <tt>jackadocs generateAt "$projectDir/README.md" markdownFor ReadmeRoot</tt> renders the Markdown version of the root chapter into the given file.
+  As explained before, the command <tt>jackadocs generateAt "$projectDir/docs/README.md" markdownFor ReadmeRoot</tt> renders the Markdown version of the root chapter into the given file.
 </p>
 <p>
   The source format of the data is always HTML, as can be seen when looking at the Scala sources that generate this document.

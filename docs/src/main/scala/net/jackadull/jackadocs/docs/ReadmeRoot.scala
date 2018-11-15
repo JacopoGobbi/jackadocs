@@ -25,7 +25,7 @@ object ReadmeRoot extends RootChapter with BadgeGenerators {
 </p>
 
   override def subChapters:Seq[Chapter] = Seq(Ch1_Motivation, Ch2_IntentedUse, Ch3_UsageExample, Ch4_ChapterStructure,
-    Ch5_MavenUtilization, Ch6_RenderingProcess, Ch7_ProgrammingConsiderations, Ch8_JackadullRecipe)
+    Ch5_RenderingProcess, Ch6_ProgrammingConsiderations, Ch7_JackadullRecipe)
 
   def docsMetaData:DocsMetaData = Main
 }

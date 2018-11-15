@@ -16,11 +16,11 @@ object Ch4_ChapterStructure extends Chapter {
 <ol>
   <li>
     As top-level, standalone Scala <tt>object</tt> types that extend the <tt>Chapter</tt> trait.
-    <a href="https://github.com/jackadull/jackadocs/blob/master/docs-generator/src/main/scala/net/jackadull/jackadocs/docs/readme/ChapterStructure.scala">The code for this very chapter</a> is an example of this.
+    <a href="https://github.com/jackadull/jackadocs/blob/release/latest/docs/src/main/scala/net/jackadull/jackadocs/docs/readme/Ch4_ChapterStructure.scala">The code for this very chapter</a> is an example of this.
   </li>
   <li>
     As inline constants, similar to case class instances, within the code.
-    <a href="https://github.com/jackadull/jackadocs/blob/master/docs-generator/src/main/scala/net/jackadull/jackadocs/docs/readme/UsageExample.scala">The <tt>UsageExample</tt> object</a> contains several examples, which can be found when looking at its <tt>subChapters</tt> method.
+    <a href="https://github.com/jackadull/jackadocs/blob/release/latest/docs/src/main/scala/net/jackadull/jackadocs/docs/readme/Ch3_UsageExample.scala">The <tt>UsageExample</tt> object</a> contains several examples, which can be found when looking at its <tt>subChapters</tt> method.
   </li>
 </ol>
 <p>
@@ -35,7 +35,7 @@ object Ch4_ChapterStructure extends Chapter {
   In this way, a tree-like chapter structure gets assembled.
 </p>
 <p>
-  Looking at <a href="https://github.com/jackadull/jackadocs/blob/master/docs-generator/src/main/scala/net/jackadull/jackadocs/docs/ReadmeRoot.scala">the source code of <tt>ReadmeRoot</tt></a> can be a helpful illustration of these abstract descriptions.
+  Looking at <a href="https://github.com/jackadull/jackadocs/blob/release/latest/docs/src/main/scala/net/jackadull/jackadocs/docs/ReadmeRoot.scala">the source code of <tt>ReadmeRoot</tt></a> can be a helpful illustration of these abstract descriptions.
 </p>
 
   override def subChapters:Seq[Chapter] = Seq(

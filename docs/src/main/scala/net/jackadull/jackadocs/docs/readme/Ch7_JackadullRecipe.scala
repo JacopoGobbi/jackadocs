@@ -4,7 +4,7 @@ import net.jackadull.jackadocs.structure.{Chapter, RootChapter}
 
 import scala.xml.NodeSeq
 
-object Ch8_JackadullRecipe extends Chapter {
+object Ch7_JackadullRecipe extends Chapter {
   def title = "Jackadull Recipe"
 
   def contents(root:RootChapter):NodeSeq =

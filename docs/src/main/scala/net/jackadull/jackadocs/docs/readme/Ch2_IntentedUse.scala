@@ -29,23 +29,26 @@ object Ch2_IntentedUse extends Chapter {
   It will do just enough to translate simple documentation, such as <tt>README.md</tt> files.)
 </p>
 <p>
-  <a href="https://github.com/jackadull/jackadocs/blob/master/docs-generator/src/main/scala/net/jackadull/jackadocs/docs/readme/IntentedUse.scala">Here</a> is an example for the Scala source file from which this text is generated.
+  <a href="https://github.com/jackadull/jackadocs/blob/release/latest/docs/src/main/scala/net/jackadull/jackadocs/docs/readme/IntentedUse.scala">Here</a> is an example for the Scala source file from which this text is generated.
 </p>
 <p>
-  In order to isolate documentation-generating code from the actual module that is to be published, it is advisable to keep the documentation generating code in a separate module.
+  In order to isolate documentation-generating code from the actual module that is to be published, it is advisable to keep the documentation generating code in a separate module (or SBT project).
   This module can be kept in a sub-folder of the main module, but there should be no explicit relationship between the main module and the documentation generating module (such as the Maven parent/child relationship).
-  In fact, the documentation generating module should never be published or deployed.
+  In SBT, the documentation module should have <tt>dependsOn(LocalRootProject)</tt>, and the root project should have `aggregates(docs)`.
+</p>
+<p>
+  The documentation generating module should never be published or deployed.
   Its only purpose is to contain the utility code which gets called in order to (re-)generate the main module's documentation.
 </p>
 <p>
-  The recommended name for this module is <tt>docs-generator</tt>.
-  An example can be found in the <a href="https://github.com/jackadull/jackadocs/tree/master/docs-generator"><tt>docs-generator</tt></a> subfolder of the <tt>jackadocs</tt> project itself.
+  The recommended name for this module is <tt>docs</tt>.
+  An example can be found in the <a href="https://github.com/jackadull/jackadocs/tree/release/latest/docs"><tt>docs</tt></a> subfolder of the <tt>jackadocs</tt> project itself.
 </p>
 <p>
-  Then, every time before making a new release of the main module, the <tt>main</tt> method of the <tt>docs-generator</tt> is to be called.
+  Then, every time before making a new release of the main module, the <tt>main</tt> method of the <tt>docs</tt> is to be called.
   Documentation will be re-generated.
   By adhering to this general workflow, documentation will always be up-to date.
-  This part can be automated using Maven, as shown below.
+  This part can be automated using Maven or SBT, as shown below.
 </p>
 <p>
   This is the basic idea.
