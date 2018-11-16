@@ -15,7 +15,7 @@ lazy val jackadull = JackadullBuild onTravis ProjectInfo(
 lazy val jackadocsBuild:Project = (project in file(".")).configure(jackadull project).aggregate(docs)
   .configure(jackadull dependencies (ScalaTest % Test, ScalaXML))
 
-lazy val docs = (project in file("docs")).configure(jackadull docs).dependsOn(LocalRootProject)
+lazy val docs = (project in file("docs")).configure(jackadull docs)
 
 addCommandAlias("build", jackadull buildCommand)
 addCommandAlias("ci", jackadull ciCommand)
