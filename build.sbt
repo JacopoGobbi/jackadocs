@@ -7,7 +7,7 @@ import scala.language.postfixOps
 
 lazy val jackadull = JackadullBuild onTravis ProjectInfo(
   name = "jackadocs",
-  version = "0.4.1",
+  version = "0.4.2-SNAPSHOT",
   basePackage = "net.jackadull.jackadocs",
   capitalizedIdentifier = "Jackadocs"
 )
