@@ -1,1 +1,1 @@
-addSbtPlugin("net.jackadull" % "jackadull-build" % "0.2.0")
+addSbtPlugin("net.jackadull" % "jackadull-build" % "0.3.4")

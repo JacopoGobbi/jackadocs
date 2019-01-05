@@ -1,25 +1,20 @@
 language: scala
 scala:
-- 2.12.7
-sudo: false
+- 2.12.8
 cache:
   directories:
-  - "$HOME/.ivy2/cache"
-  - "$HOME/.sbt"
+  - $HOME/.ivy2/cache
+  - $HOME/.sbt
+before_install: openssl aes-256-cbc -K $encrypted_5a0c5bacb4df_key -iv $encrypted_5a0c5bacb4df_iv -in project/deployment/secrets.tar.enc -out project/deployment/local.secrets.tar -d
+install: tar xv -C project/deployment -f project/deployment/local.secrets.tar
+script: if [[ "$TRAVIS_BRANCH" == 'release/latest' ]]; then echo 'Skipping build for release/latest branch.'; else sbt ci; fi
 before_cache:
 - find $HOME/.ivy2/cache -name "ivydata-*.properties" -print -delete
 - find $HOME/.sbt -name "*.lock" -print -delete
-install:
-- tar xv -C project/deployment -f project/deployment/local.secrets.tar
-script:
-- sbt ci
+after_success: if [[ "$TRAVIS_BRANCH" == "$TRAVIS_TAG" ]] && [[ "$TRAVIS_TAG" =~ ^v([0-9]+)(\.[0-9]+\.){0,2}([-0-9a-zA-Z_\.\*]+)?$ ]] && [[ "$TRAVIS_TAG" != *-SNAPSHOT ]]; then git config --global user.email "bot@jackadull.net" && git config --global user.name "Jackadull-Bot" && prev_origin=$(git config --get remote.origin.url) && git remote rm origin && git remote add origin $(sed 's/:\/\//:\/\/jackadull-bot:'${GITHUB_TOKEN}'@/' <<< $prev_origin) && git push -f origin "$TRAVIS_TAG":release/latest && git tag -l "v*-SNAPSHOT" | xargs git push origin -d; fi
 env:
   global:
   - secure: YRmC49WGmJbYlWjQDd55+WU6kSy6Y0s1hV2SeDAIMZEHIcb6QnxqA3eMoFt4+ALp9G8nxqYERXKPI57n4ADIit2CP6ivLH3SeDODrHV6aF7L6JrOz/Xtzgt4JG8QEyzaWJOs7wz9oMzENfzwWEkmTglRfTNAG5Q/+EDh/9bAu5eyTXQrPJpZMw9Zgx9XgxhYu26arZjsrdPNyER5P+O3aifv6s9KA+SR496qEGEylr2lWtJ0x0D4v99vWaZS/nMO/t3uJM2/EytkYHLYaZp+ggiiTWgQrBSTQN+7fBfYtbh61h129KpdjZaGnhyorXP9CSYCSCcvNlcCqrWeNE+/PBORaCkG528P1E6w3aIXP4gSg7hm0GthE+zW/R6qFiMoE0yw7XA+vieYzgsq4soDwwcMKTayNZ9maqZfx0lc8YTTHgJFqC2FKhQRmDPnz06ggPgo2EAR1Iar5lugpkOAzomRyUG5Uf2obIib6A2pY8+JbOw7lNjAIWGte6bo066hp+LmhMBfe6DvuZjrxdmpBmmzY+EVtzp+cUHaB9Ad6KLa9w62PMr2d2QPRIJ3wNFFnYv/aO/0MPhlq5/gEkcw5Hznch0G/aScU6Cb307z4IbOo8jesp/k2OwYd8LR7doYZ9wKZafG6LF+ZNRWBT7l+Rrf5kF/iTN+8JeRhjwCf5g=
   - secure: HmJBcBtHpBxI+4p4qDk+ze51paZa/43/0gmMRAOscwTTF/iEh6bUT7v8LDq2VCGUT3UKjly/ZrBTH3cAMZUe9NSpQOUbQuvymiG7+qXXVWsjBKpGfen48AjH5yiaeEema2jnkxJcUtQNehchsLcpl9qGTuuGALVEejkjya18LE8507nG7Vo1nbgoCT9SIXZ6ORj6D0v+G07jb0muPBozkH0JBnA9o/xRpOAlK9YzguJ+URVqpBQ9wM3FJOcQKXy1EDz+n25lFiKHE7XUjferkuXDm+XshZlV1lsrO8ogYfNx8cIDJbm1qqe+cNJVqOMpuIxGT6+DwJBp4/yZnatamrmUDMMD8UZwRIDFTdP4uqOJXCOZxDXJIYLvhyuAW7FVQ0gkpp5DZFSsbCd9UdE48GlgRMsNYW2N63Dsv4ZD+MpgyauM4oSf082Q8Hu0stYjH+gAkmCfmClRcHvJtkImhRgeGdzGKWlENkxCpPkwWMWY1P67vRfoQZxLdVPStjUz7z7qqRTLgKdYI5lfH/SnqXK+DUntaCC1/j3UUWGGy+4g+Sbb5fhuF9gx6CyKsS6T/sw68i86saZ0zV7LDAHSSBIq4e61PyJ0TRvDatqaUD4uinmnuDg8L1ryxDVu2N81UTG3TyE3OpOGYx0oTkEEO+9gHkebWb5S072h+yXODIE=
   - secure: L3dDr8DNaplV512bj9bZNzGicLzxGEbJ7MBgfBZCToCXotPumMqaS8pOv9wEfLa7/BoOsf58OvIRNugVNSftjJq/Sc8Q4L0DcUY3DQv15sIBHEye9Yu8vVkj6m4knUaIrg8KhwKI76Pt0uai4xRanfr1OhAmFFnfGUqFrfwSu9JfRlSTTquxkoFTLtFQOeuSY5xROuXz6Ehi2dLZvqIFN6omOULn6dWimqbyLaRYS/2jvOhecMqxQACqe1cnc9zivCXCTTX74VX/Qw8dYoyLyCEJkRVYXzR4vwGcVxhscNogH7ZBL39ZHH5+PtC+//az96JrSKaay8QF7bIrmJyNfU8cQjk37rhLd9QYbeCpwiRzk8R6vWo7uZBCRV/alzAtKeVNTa9jhACOawW8WiuTKPvHiaa0fOhFgNOIc9y4ue4LhBvLjQhXCYPeVYHTNx0tbZ/D8xdDM50ADh6vhnWpeKw70tkk6siSKIZ+3rsxaVQfo/U5KfGj8O21GBRk+zGQ7ptICZXpS2CIW8QVqEsHcLQ4gYMH9zDV1wGw2pTMrZc8sO+upeE9v/LrQWSk7OUFw7ZRHWlRksTgspc4Kd5pJ9kivNMr5UqC7ruVAfqkAcropcuQEHhbc5LXytLLQZ0DwgU7fgV9hotPV5Z0cJVD68G11DGJPC6Dp/N4AixNFm0=
   - secure: N4zTxK9ijIy3rI4v9rRpIUTS8nDZA5svVxO4+lAH1cal4WWPADK55tzaGjfL1maCmJTJbNvegEMUseOvoR1tSxrwDy3hsF6fOEZpiNz+kkxgTlYm4Vq2O4iX4q3HzUzSCn1m03THfyBG1AGVuOi4/mxJB3g6HYyVGFAFbC2I82Gul3iPxhE2nasIE4bO40vQ1yWDXx3eYZN0aOG/C5D4mGQNEROcoknIbtLiNJAGCzMut9DpIws1s6yviNaTuuinsj9/6jUkHa5K36YPNjy8ahSJ/c4d5Wstxiel+qFFJhKIWSiuXwWzo68fGiJW358dkFUN8lFP6nfNiSIAE4kJl/aIh99QJPrSEuHzyd13Rl0+eNes2UNVlZU7Hdkiu3YnIQd7oE1ZvpMvH+4rKmYLAZGaMUVR+WFuOkrVsITobxJTzApylgNKsFtbZGpEDzWcTHL1Pc3XzjttAro2T4mo/kS0FnUvdNdTJkXywGO947uN77QUxkz6Ahsypx+TUrDPYc8Z2bg9aFbrBsIjRq4/iD8msxBZqGLzd4q7WJkpP0Hp6vpuvaEvxiYYUPPxvxBg4JRePH/Z8slsQBPhTWbBPsWry3DgDe5VFlv3WA8mndjJdpY64v2jYK5xNJoD9sYcZraKdHk9Xa7GhUkqvmZbHjkWyHsywLV/9uYgKByg9qI=
-before_install:
-- openssl aes-256-cbc -K $encrypted_5a0c5bacb4df_key -iv $encrypted_5a0c5bacb4df_iv
-  -in project/deployment/secrets.tar.enc -out project/deployment/local.secrets.tar
-  -d
