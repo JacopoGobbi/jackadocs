@@ -31,7 +31,7 @@ object HTMLToMarkdown {
       case doc:Document => recurseOver(doc.children)
       case e:Elem => recurseOver(e.child)
       case Group(child) => recurseOver(child)
-      case _ if (ns.getClass.getName startsWith "scala.xml.NodeSeq") && (ns.theSeq != ns) => recurseOver(ns.theSeq)
+      case _ if (ns.getClass.getName startsWith "scala.xml.NodeSeq") && (ns.theSeq ne ns) => recurseOver(ns.theSeq)
       case _ if ns.isEmpty => Vector()
       case _ => sys error s"unhandled NodeSeq type (${ns.getClass}): $ns"
     }
@@ -59,9 +59,9 @@ object HTMLToMarkdown {
     case doc:Document => doc.children.toVector flatMap convertInlines
     case e:Elem => e.child.toVector flatMap convertInlines
     case Group(child) => child.toVector flatMap convertInlines
-    case _ if (ns.getClass.getName startsWith "scala.xml.NodeSeq") && (ns.theSeq != ns) => ns.theSeq.toVector flatMap convertInlines
+    case _ if (ns.getClass.getName startsWith "scala.xml.NodeSeq") && (ns.theSeq ne ns) => ns.theSeq.toVector flatMap convertInlines
     case _ if ns.isEmpty => Vector()
-    case _ => sys error s"unhandled NodeSeq type: $ns"
+    case _ => sys error s"unhandled NodeSeq type (${ns.getClass}): $ns"
   }
 
   private val convertSingleInline:PartialFunction[NodeSeq,MDInline] = {
