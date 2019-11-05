@@ -1,9 +1,9 @@
-scalaVersion := "2.12.7"
-
 import net.jackadull.build.{JackadullBuild, ProjectInfo}
 import net.jackadull.build.dependencies.JackadullDependencies._
 
 import scala.language.postfixOps
+
+scalaVersion := JackadullBuild.scalaVersion
 
 lazy val jackadull = JackadullBuild onTravis ProjectInfo(
   name = "jackadocs",
@@ -16,6 +16,7 @@ lazy val jackadocsBuild:Project = (project in file(".")).configure(jackadull pro
   .configure(jackadull dependencies (ScalaTest % Test, ScalaXML))
 
 lazy val docs = (project in file("docs")).configure(jackadull docs)
+  .settings(scalaVersion := JackadullBuild.scalaVersion)
 
 addCommandAlias("build", jackadull buildCommand)
 addCommandAlias("ci", jackadull ciCommand)

@@ -7,26 +7,26 @@ object MDWrite {
   def apply(blocks:Traversable[MDBlock], out:Appendable) {
     def renderBlock(block:MDBlock, writer:LineWriter, tight:Boolean=false):LineWriter = block match {
       case MDATXHeading(level, contents) ⇒
-        renderInlines(contents, writer pushLinePrefix ("#"*level+" ", " "*(level+1)) withoutLeadingWhitespace()) popLinePrefix() nextLine()
+        renderInlines(contents, (writer pushLinePrefix ("#"*level+" ", " "*(level+1))).withoutLeadingWhitespace()).popLinePrefix().nextLine()
       case MDBlockQuote(contents) ⇒
-        renderBlocks(contents, writer pushLinePrefix "> ") popLinePrefix()
+        renderBlocks(contents, writer pushLinePrefix "> ").popLinePrefix()
       case MDCodeFence(infoString, lines) ⇒
-        lines.foldLeft(writer append "```" append infoString nextLine()) {(w,line) ⇒
-          w append (line data) nextLine()
-        } append "```" nextLine()
+        lines.foldLeft((writer append "```" append infoString).nextLine()) {(w,line) ⇒
+          w.append(line.data).nextLine()
+        }.append("```").nextLine()
       case MDList(ordered, items, tightList) ⇒
         val w2 = items.zipWithIndex.foldLeft(writer) {case (w, (item, index)) ⇒
           val firstLinePrefix = if(ordered) s"${index+1}. " else "* "
           val followingLinesPrefix = " " * (firstLinePrefix length)
-          item.foldLeft(w pushLinePrefix (firstLinePrefix, followingLinesPrefix)) {(w2, i) ⇒ renderBlock(i, w2, tightList)} popLinePrefix()
+          item.foldLeft(w pushLinePrefix (firstLinePrefix, followingLinesPrefix)) {(w2, i) ⇒ renderBlock(i, w2, tightList)}.popLinePrefix()
         }
-        if(!tight && tightList) w2 nextLine() else w2
+        if(!tight && tightList) w2.nextLine() else w2
       case MDParagraph(contents) ⇒
         val w2 = contents.zipWithIndex.foldLeft(writer) {case (w, (t, index)) ⇒
-          if(index==0) renderInline(t, w withoutLeadingWhitespace()) else renderInline(t, w append ' ' withoutLeadingWhitespace())
-        } nextLine()
-        if(tight) w2 else w2 nextLine()
-      case MDThematicBreak ⇒ writer nextLine() append "---" nextLine() nextLine()
+          if(index==0) renderInline(t, w.withoutLeadingWhitespace()) else renderInline(t, (w append ' ').withoutLeadingWhitespace())
+        }.nextLine()
+        if(tight) w2 else w2.nextLine()
+      case MDThematicBreak ⇒ writer.nextLine().append("---").nextLine().nextLine()
     }
 
     def renderBlocks(blocks:Traversable[MDBlock], writer:LineWriter):LineWriter =
@@ -35,7 +35,7 @@ object MDWrite {
     def renderInline(inline:MDInline, writer:LineWriter):LineWriter = inline match {
       case MDCodeSpan(contents) ⇒ writer append '`' append contents append '`' // TODO what if contents contains a backtick?
       case MDEmphasis(contents) ⇒ renderInlines(contents, writer append '_') append '_'
-      case MDHardLineBreak ⇒ writer append '\\' nextLine()
+      case MDHardLineBreak ⇒ writer.append('\\').nextLine()
       case MDImage(description, url, title) ⇒
         def maybeAddTitle(w:LineWriter):LineWriter = title match {
           case Some(titleString) ⇒ appendEscaped(titleString, writer append " \"") append '\"'
@@ -102,7 +102,7 @@ object MDWrite {
         val newInner = inner append ch
         if(newInner ne inner) copy(inner = newInner) else this
       }
-    def nextLine() = copy(inner = inner nextLine(), atBeginningOfLine = true)
+    def nextLine() = copy(inner = inner.nextLine(), atBeginningOfLine = true)
     def popLinePrefix() = inner
   }
   private final case class WithLinePrefix2(nextLinePrefix:String, linesThereafter:String, inner:LineWriter) extends LineWriter {
@@ -112,7 +112,7 @@ object MDWrite {
     def append(ch:Char) =
       WithLinePrefix(linesThereafter, inner append nextLinePrefix append ch, atBeginningOfLine=false)
     def nextLine() =
-      WithLinePrefix(linesThereafter, inner append nextLinePrefix nextLine())
+      WithLinePrefix(linesThereafter, inner.append(nextLinePrefix).nextLine())
     def popLinePrefix() = inner
   }
   private final case class WithoutLeadingWhitespace(inner:LineWriter) extends LineWriter {

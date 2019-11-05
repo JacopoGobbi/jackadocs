@@ -86,7 +86,7 @@ object HTMLToMarkdown {
   private def extractList(nodes:Seq[NodeSeq], ordered:Boolean, soFar:Vector[Seq[MDBlock]]=Vector()):MDList = nodes match {
     case Seq(e:Elem, rst@_*) if e.label=="li" ⇒
       extractList(rst, ordered, soFar :+ convertBlocks(e child))
-    case Seq(Group(child), rst@_*) ⇒ extractList(child ++ rst, ordered, soFar)
+    case Seq(Group(child), rst@_*) ⇒ extractList((child ++ rst).toSeq, ordered, soFar)
     case Seq(_, rst@_*) ⇒ extractList(rst, ordered, soFar)
     case Seq() ⇒ MDList(ordered, soFar)
   }

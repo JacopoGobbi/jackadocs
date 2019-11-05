@@ -81,7 +81,7 @@ object Ch5_RenderingProcess extends Chapter {
   </li>
   <li>
     <p>
-      <tt>{<code>…</code> toString}</tt> or <tt>{<tt>…</tt> toString()}</tt>:
+      <tt>{<code>…</code>.toString}</tt> or <tt>{<tt>…</tt>.toString}</tt>:
       Gets translated into a Markdown Code Fence.
     </p>
     <p>
