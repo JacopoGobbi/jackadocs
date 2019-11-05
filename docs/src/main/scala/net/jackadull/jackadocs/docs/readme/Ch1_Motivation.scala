@@ -5,9 +5,9 @@ import net.jackadull.jackadocs.structure.{Chapter, RootChapter}
 import scala.xml.NodeSeq
 
 object Ch1_Motivation extends Chapter {
-  def title = "Motivation"
+  override def title:NodeSeq = "Motivation"
 
-  def contents(root:RootChapter):NodeSeq =
+  override def contents(root:RootChapter):NodeSeq =
 <p>
   Jackadocs is useful for cases in which generation of documentation files should be partially dynamic.
   That is, the documentation contains parts that call Scala code for computing a part of the text.

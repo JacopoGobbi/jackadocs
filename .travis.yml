@@ -3,6 +3,7 @@ scala:
 - 2.13.1
 cache:
   directories:
+  - $HOME/.cache/coursier
   - $HOME/.ivy2/cache
   - $HOME/.sbt
 before_install: openssl aes-256-cbc -K $encrypted_5a0c5bacb4df_key -iv $encrypted_5a0c5bacb4df_iv -in project/deployment/secrets.tar.enc -out project/deployment/local.secrets.tar -d
@@ -11,6 +12,7 @@ script: if [[ "$TRAVIS_BRANCH" == 'release/latest' ]]; then echo 'Skipping build
 before_cache:
 - find $HOME/.ivy2/cache -name "ivydata-*.properties" -print -delete
 - find $HOME/.sbt -name "*.lock" -print -delete
+- rm -f $HOME/.ivy2/.sbt.ivy.lock
 after_success: if [[ "$TRAVIS_BRANCH" == "$TRAVIS_TAG" ]] && [[ "$TRAVIS_TAG" =~ ^v([0-9]+)(\.[0-9]+\.){0,2}([-0-9a-zA-Z_\.\*]+)?$ ]] && [[ "$TRAVIS_TAG" != *-SNAPSHOT ]]; then git config --global user.email "bot@jackadull.net" && git config --global user.name "Jackadull-Bot" && prev_origin=$(git config --get remote.origin.url) && git remote rm origin && git remote add origin $(sed 's/:\/\//:\/\/jackadull-bot:'${GITHUB_TOKEN}'@/' <<< $prev_origin) && git push -f origin "$TRAVIS_TAG":release/latest && git tag -l "v*-SNAPSHOT" | xargs git push origin -d; fi
 env:
   global:

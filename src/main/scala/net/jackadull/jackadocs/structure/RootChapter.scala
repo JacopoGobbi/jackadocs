@@ -2,11 +2,10 @@ package net.jackadull.jackadocs.structure
 
 import net.jackadull.jackadocs.rendering.ChapterNumbering
 
-import scala.language.postfixOps
 import scala.xml.NodeSeq
 
 trait RootChapter extends Chapter {
-  def chapterNumbering:ChapterNumbering = ChapterNumbering empty
+  def chapterNumbering:ChapterNumbering = ChapterNumbering.empty
 
   lazy val (idOfChapter,chapterOfID,numberOfChapter):(Map[Chapter,String],Map[String,Chapter],Map[Chapter,String]) = {
     var forward:Map[Chapter,String] = Map()
@@ -21,11 +20,11 @@ trait RootChapter extends Chapter {
     }
     def visit(chapter:Chapter, cn:ChapterNumbering):ChapterNumbering = {
       val (number, cn2) = cn count chapter
-      val titleWithNumber = if(number isEmpty) chapter title else <_>{number} {chapter title}</_> child
+      val titleWithNumber = if(number.isEmpty) chapter.title else <_>{number} {chapter.title}</_>.child
       val id = idForTitle(chapter, titleWithNumber)
-      numbers += (chapter → number)
-      forward += (chapter → id); reverse += (id → chapter)
-      (chapter subChapters).foldLeft(cn2 subChapters) {case (cn3, subChapter) ⇒ visit(subChapter, cn3)} parent
+      numbers += (chapter -> number)
+      forward += (chapter -> id); reverse += (id -> chapter)
+      chapter.subChapters.foldLeft(cn2.subChapters) {case (cn3, subChapter) => visit(subChapter, cn3)}.parent
     }
     visit(this, chapterNumbering)
     (forward, reverse, numbers)

@@ -5,9 +5,9 @@ import net.jackadull.jackadocs.structure.{Chapter, RootChapter}
 import scala.xml.NodeSeq
 
 object Ch2_IntentedUse extends Chapter {
-  def title = "Intended Use / Basic Idea"
+  override def title:NodeSeq = "Intended Use / Basic Idea"
 
-  def contents(root:RootChapter):NodeSeq =
+  override def contents(root:RootChapter):NodeSeq =
 <p>
   There is no special magic in using Jackadocs.
   The general approach is to create a class with a <tt>main</tt> method, which overwrites all the documentation when called.

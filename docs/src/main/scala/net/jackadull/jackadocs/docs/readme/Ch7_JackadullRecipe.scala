@@ -5,9 +5,9 @@ import net.jackadull.jackadocs.structure.{Chapter, RootChapter}
 import scala.xml.NodeSeq
 
 object Ch7_JackadullRecipe extends Chapter {
-  def title = "Jackadull Recipe"
+  override def title:NodeSeq = "Jackadull Recipe"
 
-  def contents(root:RootChapter):NodeSeq =
+  override def contents(root:RootChapter):NodeSeq =
 <p>
   All elements required for running Jackadocs as part of a project have been described in the previous chapters.
   For tying things up, here is a little list of bullet points that describe the common practice when used in Jackadull projects.

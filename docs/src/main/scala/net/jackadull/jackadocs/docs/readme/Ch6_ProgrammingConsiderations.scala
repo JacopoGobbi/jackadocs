@@ -5,9 +5,9 @@ import net.jackadull.jackadocs.structure.{Chapter, RootChapter}
 import scala.xml.NodeSeq
 
 object Ch6_ProgrammingConsiderations extends Chapter {
-  def title = "Programming Considerations"
+  override def title:NodeSeq = "Programming Considerations"
 
-  def contents(root:RootChapter):NodeSeq = NodeSeq.Empty
+  override def contents(root:RootChapter):NodeSeq = NodeSeq.Empty
 
   override def subChapters:Seq[Chapter] = Seq(
     Chapter("Implicit String to NodeSeq Conversion",

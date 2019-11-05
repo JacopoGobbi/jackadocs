@@ -5,9 +5,9 @@ import net.jackadull.jackadocs.structure.{Chapter, RootChapter}
 import scala.xml.NodeSeq
 
 object Ch4_ChapterStructure extends Chapter {
-  def title = "Chapter Structure"
+  override def title:NodeSeq = "Chapter Structure"
 
-  def contents(root:RootChapter):NodeSeq =
+  override def contents(root:RootChapter):NodeSeq =
 <p>
   The contents of every Jackadocs-based document are laid out in a hierarchy of chapters and sub-chapters.
   Chapters are Scala objects.

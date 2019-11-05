@@ -5,9 +5,9 @@ import net.jackadull.jackadocs.structure.{Chapter, RootChapter}
 import scala.xml.NodeSeq
 
 object Ch3_UsageExample extends Chapter {
-  def title = "Usage Example"
+  override def title:NodeSeq = "Usage Example"
 
-  def contents(root:RootChapter):NodeSeq =
+  override def contents(root:RootChapter):NodeSeq =
 <p>
   As described, there is no special magic in using Jackadocs.
   Because there are many ways to use the tools presented by the Jackadocs library, the best introduction is an example.

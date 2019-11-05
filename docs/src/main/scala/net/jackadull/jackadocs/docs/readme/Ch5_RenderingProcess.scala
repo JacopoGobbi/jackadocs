@@ -2,13 +2,12 @@ package net.jackadull.jackadocs.docs.readme
 
 import net.jackadull.jackadocs.structure.{Chapter, RootChapter}
 
-import scala.language.postfixOps
 import scala.xml.NodeSeq
 
 object Ch5_RenderingProcess extends Chapter {
-  def title = "Rendering Process"
+  override def title:NodeSeq = "Rendering Process"
 
-  def contents(root:RootChapter):NodeSeq =
+  override def contents(root:RootChapter):NodeSeq =
 <p>
   As explained before, the command <tt>jackadocs generateAt "$projectDir/docs/README.md" markdownFor ReadmeRoot</tt> renders the Markdown version of the root chapter into the given file.
 </p>
@@ -74,7 +73,7 @@ object Ch5_RenderingProcess extends Chapter {
 <ul>
   <li>
     <p>
-      <tt>{<blockquote>…</blockquote> toString}</tt>:
+      <tt>{<blockquote>…</blockquote>.toString}</tt>:
       Gets translated into Markdown blockquote.
       Can contain other blocks.
     </p>
@@ -88,7 +87,7 @@ object Ch5_RenderingProcess extends Chapter {
       Can optionally contain the info string as a <tt>class</tt> attribute prefixed with <tt>language-</tt>, for example:
     </p>
     <p>
-      <tt>{<code class="language-scala">…</code> toString}</tt>
+      <tt>{<code class="language-scala">…</code>.toString}</tt>
     </p>
     <p>
       Contained text gets interpreted literaly.
@@ -97,7 +96,7 @@ object Ch5_RenderingProcess extends Chapter {
   </li>
   <li>
     <p>
-      <tt>{<p>…</p> toString}</tt>:
+      <tt>{<p>…</p>.toString}</tt>:
       Gets translated into a Markdown paragraph.
       Can contain inlines.
     </p>
@@ -108,9 +107,9 @@ object Ch5_RenderingProcess extends Chapter {
   </li>
   <li>
     <p>
-      <tt>{<ul>…</ul> toString}</tt> or <tt>{<ol>…</ol> toString}</tt>:
+      <tt>{<ul>…</ul>.toString}</tt> or <tt>{<ol>…</ol>.toString}</tt>:
       Gets translated into an unordered or ordered list, respectively.
-      As with HTML, list items should be <tt>{<li>…</li> toString}</tt> child tags.
+      As with HTML, list items should be <tt>{<li>…</li>.toString}</tt> child tags.
     </p>
     <p>
       List items can contain any kind of block.
@@ -126,7 +125,7 @@ object Ch5_RenderingProcess extends Chapter {
 <ul>
   <li>
     <p>
-      <tt>{<a href="…">…</a> toString}</tt>:
+      <tt>{<a href="…">…</a>.toString}</tt>:
       Gets converted to a Markdown link.
       Can contain other inlines as children.
       Optionally, allows for a <tt>title</tt> attribute.
@@ -134,14 +133,14 @@ object Ch5_RenderingProcess extends Chapter {
   </li>
   <li>
     <p>
-      <tt>{<b>…</b> toString}</tt>:
+      <tt>{<b>…</b>.toString}</tt>:
       Gets converted to Markdown strong emphasis.
       Can contain other inlines.
     </p>
   </li>
   <li>
     <p>
-      <tt>{<code>…</code> toString}</tt> or <tt>{<tt>…</tt> toString}</tt>:
+      <tt>{<code>…</code>.toString}</tt> or <tt>{<tt>…</tt>.toString}</tt>:
       Gets converted to a Markdown code span.
       Cannot contain other inlines, only plain text.
     </p>
@@ -154,20 +153,20 @@ object Ch5_RenderingProcess extends Chapter {
   </li>
   <li>
     <p>
-      <tt>{<del>…</del> toString}</tt>:
+      <tt>{<del>…</del>.toString}</tt>:
       Gets converted to Markdown strikethrough (GFM extension).
       Can contain other inlines as children.
     </p>
   </li>
   <li>
     <p>
-      <tt>{<em>…</em> toString}</tt> or <tt>{<i>…</i> toString}</tt>:
+      <tt>{<em>…</em>.toString}</tt> or <tt>{<i>…</i>.toString}</tt>:
       Gets converted to Markdown emphasis.
     </p>
   </li>
   <li>
     <p>
-      <tt>{<img src="..." alt="..." /> toString}</tt>:
+      <tt>{<img src="..." alt="..." />.toString}</tt>:
       Gets translated into a Markdown image.
     </p>
   </li>
@@ -273,7 +272,7 @@ ChapterNumbering(ChapterNumbering empty, ChapterNumbering decimal, ChapterNumber
   For example:
 </p>
 <pre><code class="language-scala">
-RenderAsMarkdown(ReadmeRoot, ChapterNumbering.empty) foreach {{md ⇒ println(md.treeStructure())}}
+RenderAsMarkdown(ReadmeRoot, ChapterNumbering.empty) foreach {{md => println(md.treeStructure())}}
 </code></pre>
 <p>
   <tt>RenderAsMarkdown</tt> returns a sequence of Markdown elements.
