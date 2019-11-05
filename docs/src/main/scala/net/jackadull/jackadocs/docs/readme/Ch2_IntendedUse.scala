@@ -4,7 +4,7 @@ import net.jackadull.jackadocs.structure.{Chapter, RootChapter}
 
 import scala.xml.NodeSeq
 
-object Ch2_IntentedUse extends Chapter {
+object Ch2_IntendedUse extends Chapter {
   override def title:NodeSeq = "Intended Use / Basic Idea"
 
   override def contents(root:RootChapter):NodeSeq =
@@ -29,12 +29,12 @@ object Ch2_IntentedUse extends Chapter {
   It will do just enough to translate simple documentation, such as <tt>README.md</tt> files.)
 </p>
 <p>
-  <a href="https://github.com/jackadull/jackadocs/blob/release/latest/docs/src/main/scala/net/jackadull/jackadocs/docs/readme/IntentedUse.scala">Here</a> is an example for the Scala source file from which this text is generated.
+  <a href="https://github.com/jackadull/jackadocs/blob/release/latest/docs/src/main/scala/net/jackadull/jackadocs/docs/readme/Ch2_IntendedUse.scala">Here</a> is an example for the Scala source file from which this text is generated.
 </p>
 <p>
   In order to isolate documentation-generating code from the actual module that is to be published, it is advisable to keep the documentation generating code in a separate module (or SBT project).
   This module can be kept in a sub-folder of the main module, but there should be no explicit relationship between the main module and the documentation generating module (such as the Maven parent/child relationship).
-  In SBT, the documentation module should have <tt>dependsOn(LocalRootProject)</tt>, and the root project should have `aggregates(docs)`.
+  In SBT, the documentation module should have <tt>dependsOn(LocalRootProject)</tt>, and the root project should have <tt>aggregates(docs)</tt>.
 </p>
 <p>
   The documentation generating module should never be published or deployed.

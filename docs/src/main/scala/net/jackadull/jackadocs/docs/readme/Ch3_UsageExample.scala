@@ -26,7 +26,7 @@ object Ch3_UsageExample extends Chapter {
   This is effectively defined as:
 </p>
 <pre><code class="language-bash">
-jackadocsGenerate := (runMain in Compile).toTask(s" ${{projectInfo basePackage}}.docs.Main .").value
+jackadocsGenerate := (runMain in Compile).toTask(s" ${{projectInfo.basePackage}}.docs.Main .").value
 </code></pre>
 <p>
   SBT will then compile the project, and run the main class of <tt>docs</tt>.
@@ -37,7 +37,7 @@ jackadocsGenerate := (runMain in Compile).toTask(s" ${{projectInfo basePackage}}
       subChapters = Seq(
 Chapter("Automation in the Main Project",
 <p>
-  The process of re-generating the documentation has been automated by aliasing <tt>sbt build</tt> to <tt>;compile ;jackadocsGenerate</tt>.
+  The process of re-generating the documentation has been automated by aliasing <tt>sbt build</tt> to <tt>compile; jackadocsGenerate</tt>.
 </p>
 <p>
   The SBT file also contains another option:
@@ -83,7 +83,7 @@ Chapter("Automation in the Main Project",
   <li>
     <p>Generate the <tt>README.md</tt> file:</p>
 <pre><code class="language-scala">
-jackadocs generateAt s"$projectDir/docs/README.md" markdownFor ReadmeRoot
+jackadocs.generateAt(s"$projectDir/docs/README.md").markdownFor(ReadmeRoot)
 </code></pre>
     <p>
       Tells Jackadocs to generate the Markdown for <tt>ReadmeRoot</tt> and write it into <tt>README.md</tt>, relative to the project base directory that was passed in as a command-line argument.

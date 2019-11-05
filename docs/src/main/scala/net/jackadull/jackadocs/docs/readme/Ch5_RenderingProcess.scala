@@ -9,7 +9,7 @@ object Ch5_RenderingProcess extends Chapter {
 
   override def contents(root:RootChapter):NodeSeq =
 <p>
-  As explained before, the command <tt>jackadocs generateAt "$projectDir/docs/README.md" markdownFor ReadmeRoot</tt> renders the Markdown version of the root chapter into the given file.
+  As explained before, the command <tt>jackadocs.generateAt("$projectDir/docs/README.md").markdownFor(ReadmeRoot)</tt> renders the Markdown version of the root chapter into the given file.
 </p>
 <p>
   The source format of the data is always HTML, as can be seen when looking at the Scala sources that generate this document.
@@ -238,7 +238,7 @@ object Ch5_RenderingProcess extends Chapter {
   For example, the <tt>RootChapter</tt> of this documentation is defined as:
 </p>
 <pre><code class="language-scala">
-override def chapterNumbering = ChapterNumbering(ChapterNumbering empty, ChapterNumbering decimal)
+override def chapterNumbering = ChapterNumbering(ChapterNumbering.empty, ChapterNumbering.decimal)
 </code></pre>
 <p>
   This defines that top-level chapters will not be numbered (<tt>empty</tt>), while the level below that is numbered decimally (<tt>decimal</tt>).
@@ -250,7 +250,7 @@ override def chapterNumbering = ChapterNumbering(ChapterNumbering empty, Chapter
   As an example, if only two levels of chapters should be numbered, and everything at chapter level 3 and below should have no numbering, this would look like this:
 </p>
 <pre><code class="language-scala">
-ChapterNumbering(ChapterNumbering empty, ChapterNumbering decimal, ChapterNumbering decimal, ChapterNumbering empty)
+ChapterNumbering(ChapterNumbering.empty, ChapterNumbering.decimal, ChapterNumbering.decimal, ChapterNumbering.empty)
 </code></pre>
 <p>
   Other types and conditions for chapter numbering are also possible.
