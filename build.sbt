@@ -7,7 +7,7 @@ scalaVersion := JackadullBuild.scalaVersion
 
 lazy val jackadull = JackadullBuild onTravis ProjectInfo(
   name = "jackadocs",
-  version = "0.5.0",
+  version = "0.5.1-SNAPSHOT",
   basePackage = "net.jackadull.jackadocs",
   capitalizedIdentifier = "Jackadocs"
 )
